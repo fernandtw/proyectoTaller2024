@@ -1,0 +1,26 @@
+{% extends 'components/Layout/base.html' %} 
+
+{% block title %}Perfil{% endblock %}
+{% block content %}  
+  <h1 class="text-center mt-5">Perfil de {{ perfil.usuario.username }}</h1>
+
+  <div class="card_perfil d-flex justify-content-center">
+    <div class="card_perfil_contenido" style="width: 20rem;">
+      {% if perfil.avatar %}
+        <div class="card_image d-flex justify-content-center m-3">
+          <img src="{{ perfil.avatar.url}}" alt="Avatar" class="img-avatar card-img-top m-auto"  alt="...">
+        </div>
+      {% else %}
+        <p>No tienes un avatar cargado.</p>
+      {% endif %}
+      <div class="card-body">
+        <p><strong>usuario:</strong> {{ perfil.usuario }}</p>
+        <p><strong>Biografia:</strong> {{ perfil.bio }}</p>
+        <p><strong>Email:</strong> {{ email }}</p>
+        <button type="button" class="btn btn-outline-info">
+          <a href="{% url 'editar_perfil' %}">Editar Perfil</a>
+        </button>
+      </div>
+    </div>
+  </div>
+{% endblock %}

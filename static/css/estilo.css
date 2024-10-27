@@ -1,0 +1,286 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; 
+
+}
+main {
+    flex: 1;
+
+}
+/* Carrusel */
+#carouselExampleIndicators {
+    max-width: 1400px; /* Ancho máximo del carrusel */
+    margin: 0 auto; /* Centrar el carrusel en la página */
+}
+/* Estilo para las imágenes del carrusel */
+.carousel-item img {
+    height: 500px; /* Altura fija para las imágenes */
+    object-fit: cover; /* Asegura que las imágenes cubran el área sin distorsionarse */
+}
+
+/* Estilos adicionales para el footer */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+      
+}
+.container_footer{
+    display: flex;
+    flex-direction: column;
+    min-height: 30vh;
+}
+.footer h5 {
+    color: #007bff;
+}
+.footer-icon {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    color: #007bff;
+}
+a{
+    text-decoration: none;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.container {
+    display: flex;
+    margin-left: -300px;
+    width: 550px;
+
+}
+
+body{
+    background-color: #FFEFEF;
+}
+.navbar {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.navbar > .container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+/* Imagenes */
+.card_image{
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: cover;
+    object-position: center;
+    width: 90%;
+    height: 15em;
+}
+
+
+/* Home */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+}
+.main-post {
+    flex: 2;
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 5px;
+}
+.main-post h2 {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 2.5em;
+    margin-top: 0;
+}
+.sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.post-card {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 15px;
+}
+.post-card h3 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.category {
+    font-weight: bold;
+}
+.world { color: #007bff; }
+.design { color: #28a745; }
+.date {
+    color: #6c757d;
+    font-size: 0.9em;
+}
+.thumbnail {
+    background-color: #dee2e6;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    margin-top: 15px;
+}
+
+.card_perfil_contenido{
+    background-color: aliceblue;
+    text-decoration: none;
+    margin: 2em;
+    padding: 1em;
+    border-radius: 1%;
+}
+
+.card_perfil_contenido {
+    background-color: #87A2FF; /* Color inicial */
+    transition: background-color 0.3s ease;
+}
+  
+.card_perfil_contenido:hover {
+    background-color: #B7E0FF; /* Color al hacer hover */
+}
+
+.card_editar_perfil{
+    margin: 1rem;
+    padding: 2em;
+}
+  
+
+/* Barra de busqueda */
+
+#busqueda{
+    width: 100%;
+    height: 70vh;
+}
+
+
+/* Estilos generales para el contenedor de recetas */
+.contenedor_recetas {
+    display: flex;
+    flex-direction: column; /* Cambiar a columna para una mejor organización */
+    align-items: center; /* Centrar las tarjetas */
+    width: 100%; /* Ancho completo de la ventana */
+    height: auto; /* Altura completa de la ventana */
+    overflow-y: auto; /* Permitir el desplazamiento vertical si es necesario */
+    padding: 5px; /* Espaciado interno */
+    box-sizing: border-box; /* Incluir padding en el ancho y alto total */
+    margin: 0px;
+}
+
+/* Estilo para cada tarjeta */
+.card {
+    width: 100%; /* Ancho completo del contenedor */
+    max-width: 800px; /* Ancho máximo del contenedor de tarjetas */
+    border: none; /* Sin borde */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin: 10px 0; /* Margen entre tarjetas */
+    transition: transform 0.2s; /* Efecto de hover */
+    margin-top: 50px;
+    margin-bottom: 0.5rem;
+}
+
+/* Efecto al pasar el mouse sobre la tarjeta */
+.card:hover {
+    transform: scale(1.02); /* Aumentar ligeramente al pasar el ratón */
+}
+
+/* Estilo para la imagen de la receta */
+.card_receta img {
+    width: 100%; /* Ancho completo de la tarjeta */
+    height: auto; /* Altura automática para mantener la proporción */
+    border-top-left-radius: 10px; /* Bordes redondeados en la parte superior */
+    border-top-right-radius: 10px; /* Bordes redondeados en la parte superior */
+    object-fit: cover;
+}
+
+/* Estilo para el cuerpo de la tarjeta */
+.card_body_recetas {
+    padding: 15px; /* Padding interno */
+}
+
+/* Estilo para el título */
+.card_body_recetas h4 {
+    font-size: 1.5rem; /* Tamaño de fuente más grande */
+    margin-bottom: 10px; /* Espacio debajo del título */
+}
+
+/* Estilo para la categoría */
+.card_body_recetas .text-primary {
+    font-weight: bold; /* Negrita */
+}
+
+/* Estilo para el texto de los ingredientes */
+.card_body_recetas .card-text {
+    color: #555; /* Color de texto más suave */
+    margin-bottom: 15px; /* Espacio debajo del texto */
+}
+
+/* Estilo para el enlace "Seguir leyendo" */
+.card_body_recetas .stretched-link {
+    color: #007bff; /* Color del enlace */
+    text-decoration: none; /* Sin subrayado */
+}
+
+.card_body_recetas .stretched-link:hover {
+    text-decoration: underline; /* Subrayar al pasar el ratón */
+}
+
+/* Header */
+.header-bg {
+    background-image: url('/static/images/imagen.png');
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+}
+
+.header-content {
+    background-color: rgba(0, 0, 0, 0.6);
+    height: 100%;
+}
+
+@media (min-width: 768px) {
+    body {
+        min-width: 768px;
+        min-height: 600px;
+    }
+    
+    .col-md-8{
+        flex: 0 0 auto;
+        width: 100%;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+    body {
+        min-width: 480px;
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+
+
+
+

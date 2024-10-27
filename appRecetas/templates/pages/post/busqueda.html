@@ -1,0 +1,22 @@
+{% extends 'components/Layout/base.html' %} 
+{% load static %}
+{% block content %}
+  <div id="busqueda">   
+    {% if searched %}
+      <h1>Última búsqueda: {{ searched }}</h1>
+      <br>
+      {% for resultados in resultados %}
+        <div class="card" style="width: 18rem;">
+          <img src="{{ resultados.image.url }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{resultados}}</h5>
+            <a href="{% url 'receta_detalle' resultados.id %}" class="btn btn-primary">Ver detalles</a>
+          </div>
+        </div>
+        <br>
+      {% endfor %}
+    {% else %}
+      <h1>Hey! olvido ingresar que es lo que quiere buscar</h1>
+    {% endif %}
+  </div>
+{% endblock %}
