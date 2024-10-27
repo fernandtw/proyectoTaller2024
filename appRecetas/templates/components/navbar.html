@@ -23,7 +23,7 @@
         {% endif %}
         {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Salir</a>
+            <a class="nav-link" href="{% url 'exit' %}">Salir</a>
           </li>
         {% else %} 
           <li class="nav-item">

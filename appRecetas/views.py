@@ -8,6 +8,7 @@ from .forms import CustomUserCreationForm, PostForm, EditarPerfilForm
 from django.contrib.auth.forms import AuthenticationForm
 
 
+
 ############################
 def is_admin(user):
     return user.is_staff
