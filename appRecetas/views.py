@@ -133,13 +133,21 @@ def receta_detalle(request, receta_id):
 
 @login_required
 def perfil(request):
-    perfil = request.user.perfil
+    try:
+        perfil = request.user.perfil
+    except Perfil.DoesNotExist:
+        # Crear un perfil por defecto si deseas
+        perfil = Perfil.objects.create(usuario=request.user)
+
+    # Precargar datos relacionados si es necesario
+    perfil = Perfil.objects.select_related('usuario').get(usuario=request.user)
+
     return render(
         request,
         "pages/usuario/perfil.html",
         {
             "perfil": perfil,
-            "email": request.user.email,  # Asegúrate de incluir el correo electrónico
+            "email": request.user.email,
         },
     )
 
