@@ -3,50 +3,42 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 import uuid
 
-# Create your models here.
+class Contacto(models.Model):
+    OPCIONES_CONSULTAS = [
+        ('general', 'Consulta General'),
+        ('soporte', 'Soporte Técnico'),
+        ('sugerencias', 'Sugerencias'),
+        ('otros', 'Otros'),
+    ]
 
-
-# Categoría
-class Category(models.Model):
-    name = models.CharField(max_length=200, unique=True, verbose_name="Nombre")
-    active = models.BooleanField(default=True, verbose_name="Active")
-    created = models.DateField(auto_now=True, verbose_name="Fecha de creacion")
-    updated = models.DateField(auto_now=True, verbose_name="Fecha de modificacion")
-
-    class Meta:
-        verbose_name = "Categoria"
-        verbose_name_plural = "Categorias"
-        ordering = ["name"]
-
-    def __str__(self):
-        return self.name
-
-
-def user_avatar_upload_path(instance, filename):
-    return f"avatars/{instance.usuario.username}/{filename}"
-
-
-class Perfil(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(
-        upload_to=user_avatar_upload_path, null=True, blank=True, verbose_name="Avatar"
-    )
-    bio = models.CharField(max_length=250, blank=True)
+    nombre = models.CharField(max_length=50, verbose_name="Nombre")
+    correo = models.EmailField(verbose_name="Correo Electrónico")
+    tipo_consulta = models.CharField(max_length=20, choices=OPCIONES_CONSULTAS, verbose_name="Tipo de Consulta")
+    mensaje = models.TextField(verbose_name="Mensaje")
+    avisos = models.BooleanField(default=False, verbose_name="Recibir Avisos")
 
     def __str__(self):
-        return self.usuario.username
+        return self.nombre
 
-
-# Autor
-
-
-# Modelo
 
 
 # Recetas post
 
-
+CATEGORIAS = [
+    ('aperitivo', 'Aperitivo'),
+    ('principal', 'Plato Principal'),
+    ('postre', 'Postre'),
+    ('bebida', 'Bebida'),
+    ('pan', 'Pan y Bollería'),
+    ('sopa', 'Sopa y Guiso'),
+    ('ensalada', 'Ensalada'),
+    ('mariscos', 'Mariscos'),
+    ('carnes', 'Carnes'),
+        ('vegetariano', 'Vegetariano'),
+    ('otros', 'Otros'),
+]
 class Post(models.Model):
+    
     title = models.CharField(max_length=250, verbose_name="Titulo")
     ingredients = models.TextField(default="", verbose_name="Ingredientes")
     instructions = models.TextField(default="", verbose_name="Instrucciones")
@@ -57,11 +49,7 @@ class Post(models.Model):
         upload_to="posts", null=True, blank=True, verbose_name="Tabla"
     )
     published = models.BooleanField(default=False, verbose_name="Publicado")
-
-    category = models.ForeignKey(
-        Category, on_delete=models.CASCADE, verbose_name="Categoria"
-    )
-
+    category = models.CharField(max_length=40, choices=CATEGORIAS, default='otros')
     created = models.DateTimeField(
         default=timezone.now, verbose_name="Fecha de creación"
     )

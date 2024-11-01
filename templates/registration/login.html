@@ -14,8 +14,8 @@
         <h5 class="card-title">Ingrese sus credenciales</h5>
         {{ form | crispy }}
 
-        <a href="{% url 'home' %}" class="card-link">Inicio</a>
-        <a href="{% url 'register' %}" class="card-link">Registrarse</a>
+        <a href="{% url 'recetas:home' %}" class="card-link">Inicio</a>
+        <a href="{% url 'usuarios:register' %}" class="card-link">Registrarse</a>
 
         <button class="btn btn-sm btn-primary float-end" type="submit">Iniciar sesión</button>
       </div>
