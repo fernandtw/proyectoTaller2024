@@ -30,6 +30,19 @@
             <h2>Tabla Nutricional</h2>
             <img src="{{ receta.tabla.url }}" style="width: 20rem;" alt="{{ receta.title }}" class="img-fluid rounded mb-4">
           {% endif %}
+          
+          <h2>Comentarios...</h2>
+          {% if not receta.comments.exists %}
+              No hay comentarios aún... <a href="#">Agregar uno</a>
+          {% else %}
+              {% for comment in receta.comments.all %}
+                  <strong>{{ comment.name }} - {{ comment.date_added }}</strong>
+                  <p>{{ comment.body }}</p>
+                  <br>
+              {% endfor %}
+          {% endif %}
+          
+          
         </article>
       </div>
     </div>

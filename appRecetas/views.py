@@ -128,7 +128,7 @@ def receta_detalle(request, receta_id):
         "ingredientes": ingredientes,
         "instrucciones": instrucciones,
     }
-    return render(request, "pages/recetas/receta_detalle.html", context)
+    return render(request, "pages/recetas/receta_detalle.html",  context)
 
 
 @login_required
