@@ -1,41 +1,41 @@
 <nav class="navbar navbar-expand-lg borde mb-2 bg-danger">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'home'%}">RukaSabor</a>
+    <a class="navbar-brand" href="{% url 'recetas:home' %}">RukaSabor</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'home'%}">Inicio</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'recetas:home' %}">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'recetas'%}">Recetas</a>
+          <a class="nav-link" href="{% url 'recetas:recetas' %}">Recetas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'perfil' %}">Perfil</a>
+          <a class="nav-link" href="{% url 'usuarios:perfil' %}">Perfil</a>
         </li>
         {% if request.user.is_staff %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'listar_recetas' %}">Administracion de recetas</a>
+            <a class="nav-link" href="{% url 'recetas:listar_recetas' %}">Administracion de recetas</a>
           </li>
           <!-- Puedes agregar más opciones para el staff aquí -->
         {% endif %}
         {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'exit' %}">Salir</a>
+            <a class="nav-link" href="{% url 'usuarios:exit' %}">Salir</a>
           </li>
         {% else %} 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Ingresar</a>
+            <a class="nav-link" href="{% url 'usuarios:login' %}">Ingresar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'register' %}">Registrarse</a>
+            <a class="nav-link" href="{% url 'usuarios:register' %}">Registrarse</a>
           </li>
         {% endif %}
         <li class="nav-item dropdown"> 
       </ul>
-      <form class="d-flex container px-5" method="POST" action="{% url 'busqueda_funcional' %}">
+      <form class="d-flex container px-5" method="POST" action="{% url 'recetas:busqueda_funcional' %}">
         {% csrf_token %}
         <input class="form-control ms-5 w-30" type="search" placeholder="Buscar" aria-label="Buscar" autocapitalize="none" 
         autocomplete="off" autocorrect="off" tabindex="0" spellcheck="false" name="busquedaFuncional">

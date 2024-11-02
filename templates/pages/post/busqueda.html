@@ -1,7 +1,7 @@
 {% extends 'components/Layout/base.html' %} 
 {% load static %}
 {% block content %}
-  <div id="busqueda">   
+  <center id="busqueda">   
     {% if searched %}
       <h1>Última búsqueda: {{ searched }}</h1>
       <br>
@@ -10,7 +10,7 @@
           <img src="{{ resultados.image.url }}" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">{{resultados}}</h5>
-            <a href="{% url 'receta_detalle' resultados.id %}" class="btn btn-primary">Ver detalles</a>
+            <a href="{% url 'recetas:receta_detalle' resultados.id %}" class="btn btn-primary">Ver detalles</a>
           </div>
         </div>
         <br>
@@ -18,5 +18,5 @@
     {% else %}
       <h1>Hey! olvido ingresar que es lo que quiere buscar</h1>
     {% endif %}
-  </div>
+  </center>
 {% endblock %}

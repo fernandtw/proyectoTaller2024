@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
-from .models import Post, Perfil
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from django.contrib import messages
-from django.contrib.auth import logout, authenticate, login
-from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import CustomUserCreationForm, PostForm, EditarPerfilForm
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import user_passes_test
+from .models import Post
+from .forms import PostForm, ContactoForm
 
 
 
@@ -25,57 +24,27 @@ def home(request):
 
 
 # Vista de recetas
-@login_required
 def recetas(request):
     recetas = Post.objects.all()  # Transforma datos a una lista
     data = {"recetas": recetas}
     return render(request, "pages/recetas/lista_recetas.html", data)
 
 
-# Vista de cierre de sesión
-def exit(request):
-    logout(request)
-    return redirect("home")
-
-
-def register(request):
-    if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
-
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect("home")
-        else:
-            messages.error(request, "Por favor corrige los errores en el formulario.")
-    else:
-        form = CustomUserCreationForm()
-
-    return render(request, "registration/register.html", {"form": form})
-
-
 @user_passes_test(is_admin)
 def agregar_receta(request):
-
-    data = {"form": PostForm()}
-
     if request.method == "POST":
-        formulario = PostForm(
-            data=request.POST, files=request.FILES
-        )  # Crea una instancia del formulario
+        formulario = PostForm(data=request.POST, files=request.FILES)  # Crea una instancia del formulario
         if formulario.is_valid():
             formulario.save()
-        else:
-            # Si el formulario no es válido, lo volvemos a enviar con los errores
-            data = {
-                "form": formulario,
-                "mensaje": "Hubo un error al guardar la receta.",
-            }
+            return redirect('recetas:listar_recetas')  # Cambia esto a la URL que desees después de guardar
     else:
         formulario = PostForm()
-        data = {"form": formulario}
 
-    return render(request, "pages/Admin/agregar.html", data)
+    return render(request, "pages/Admin/agregar.html", {
+        "form": formulario,
+    })
+
+
 
 
 @user_passes_test(is_admin)
@@ -98,7 +67,7 @@ def modificar_receta(request, id):
         formulario = PostForm(data=request.POST, instance=receta, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            return redirect(to="listar_recetas")
+            return redirect(to="recetas:listar_recetas")
         data["form"] = formulario
 
     return render(request, "pages/Admin/modificar.html", data)
@@ -108,7 +77,7 @@ def modificar_receta(request, id):
 def eliminar_receta(request, id):
     receta = get_object_or_404(Post, id=id)
     receta.delete()
-    return redirect(to="listar_recetas")
+    return redirect(to="recetas:listar_recetas")
 
 
 # Detalle receta
@@ -130,52 +99,6 @@ def receta_detalle(request, receta_id):
     }
     return render(request, "pages/recetas/receta_detalle.html", context)
 
-
-@login_required
-def perfil(request):
-    try:
-        perfil = request.user.perfil
-    except Perfil.DoesNotExist:
-        # Crear un perfil por defecto si deseas
-        perfil = Perfil.objects.create(usuario=request.user)
-
-    # Precargar datos relacionados si es necesario
-    perfil = Perfil.objects.select_related('usuario').get(usuario=request.user)
-
-    return render(
-        request,
-        "pages/usuario/perfil.html",
-        {
-            "perfil": perfil,
-            "email": request.user.email,
-        },
-    )
-
-
-@login_required
-def editar_perfil(request):
-    perfil = get_object_or_404(Perfil, usuario=request.user)
-
-    if request.method == "POST":
-        form = EditarPerfilForm(request.POST, request.FILES, instance=perfil)
-        if form.is_valid():
-            # Actualizar nombre de usuario y correo electrónico en el modelo User
-            request.user.username = form.cleaned_data["username"]
-            request.user.email = form.cleaned_data["email"]
-            request.user.save()
-
-            # Guardar cambios en el perfil
-            form.save()
-            return redirect("perfil")
-    else:
-        form = EditarPerfilForm(instance=perfil)
-
-    return render(request, "pages/usuario/editar_perfil.html", {"form": form})
-
-
-# Busqueda
-
-
 def busqueda_funcional(request):
     if request.method == "POST":
         searched = request.POST.get("busquedaFuncional")
@@ -190,3 +113,46 @@ def busqueda_funcional(request):
         )
     else:
         return render(request, "pages/post/busqueda.html", {})
+
+
+#Ayuda
+
+def contacto(request):
+    if request.method == "POST":
+        formulario = ContactoForm(data=request.POST)
+        
+        if formulario.is_valid():
+            # Obtener los datos del formulario
+            nombre = formulario.cleaned_data['nombre']
+            correo = formulario.cleaned_data['correo']
+            mensaje = formulario.cleaned_data['mensaje']
+            tipo_consulta = formulario.cleaned_data['tipo_consulta']
+
+            # Enviar correo
+            template = render_to_string('pages/ayudaUsuario/email_template.html', {
+                'nombre': nombre,
+                'correo': correo,
+                'mensaje': mensaje
+            })
+            email_message = EmailMessage(
+                subject=tipo_consulta,
+                body=template,
+                from_email=correo,
+                to=['rukasabor@gmail.com']
+            )
+
+            try:
+                email_message.send()
+                messages.success(request, "Tu mensaje ha sido enviado exitosamente.")
+                return redirect('recetas:contacto')  # Ajusta la URL según sea necesario
+            except Exception as e:
+                messages.error(request, "Hubo un error al enviar el correo. Intenta de nuevo más tarde.")
+                print(f"Error al enviar el correo: {e}")
+        else:
+            # Solo se muestra un mensaje de error si el formulario no es válido
+            messages.error(request, "Por favor, corrige los errores en el formulario.")
+            print(formulario.errors)
+    else:
+        formulario = ContactoForm()  # Crear un nuevo formulario si no es un POST
+
+    return render(request, "pages/ayudaUsuario/contacto.html", {'form': formulario})
