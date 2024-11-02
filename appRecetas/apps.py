@@ -6,5 +6,3 @@ class ApprecetasConfig(AppConfig):
     name = "appRecetas"
     verbose_name = "Aplicación web de recetas"
 
-    def ready(self):
-        import appRecetas.signals

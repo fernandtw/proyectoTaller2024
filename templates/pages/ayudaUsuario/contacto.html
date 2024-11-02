@@ -1,0 +1,38 @@
+{% extends 'components/Layout/base.html' %} 
+{% load crispy_forms_tags %} 
+
+{% block title %}Ayuda, Contactanos{% endblock %}
+{% block content %} 
+<div class="row d-flex align-items-center justify-content-center m-1">
+    <div class="col-12 col-md-6 offtset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="text-center">Necesitas ayuda?</h2>
+                <h2 class="text-center">Contactanos!</h2>
+        <!-- El post trata datos sensibles -->
+                <form action="{% url 'recetas:contacto' %}" class="formulario_contacto" id="formulario_contacto" method="post">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <br>
+                {% if messages %}
+                    {% for message in messages%}
+                        <div class="alert alert-success" role="alert">
+                            {{message}}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="d-flex gap-3">
+                    <input type="reset" value="Cancelar" class="btn btn-info py-1 my-1">
+                    <button type="submit" id="btnEnviar" class="btn btn-danger py-1 my-1">Enviar</button>
+                </div>
+
+
+                </form>
+                <table id="tablaContactos">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

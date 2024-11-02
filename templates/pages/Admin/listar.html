@@ -8,7 +8,7 @@
     <div class="card-body">
       <h2 class="text-center m-1">Listado de Recetas</h2>
 
-      <a href="{% url 'agregar_recetas' %}" class="btn btn-outline-success btn-sm">
+      <a href="{% url 'recetas:agregar_recetas' %}" class="btn btn-outline-success btn-sm">
         Agregar Receta
       </a>
       <table class="table table-striped table-hover table-responsive-sm my-2">
@@ -25,16 +25,16 @@
             <td>{{ p.ingredients | truncatewords:5 }}</td>
             <td>{{ p.instructions | truncatewords:5 }}</td>
             <!-- Muestra solo las primeras 20 palabras -->
-            <td>{{ p.category.name }}</td>
+            <td>{{ p.category }}</td>
             <!-- Asumiendo que category es un ForeignKey y tiene un campo 'name' -->
             <td>
               <a
-                href="{% url 'modificar_receta' p.id %}"
+                href="{% url 'recetas:modificar_receta' p.id %}"
                 class="btn btn-info btn-sm">
                 Modificar
               </a>
               <a
-                href="{% url 'eliminar_receta' p.id %}"
+                href="{% url 'recetas:eliminar_receta' p.id %}"
                 class="btn btn-danger btn-sm">
                 Eliminar
               </a>

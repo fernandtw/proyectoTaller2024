@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "appRecetas",
+    "usuarios",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -136,7 +137,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# settings.py
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'rukasabor@gmail.com'   
+EMAIL_HOST_PASSWORD = 'nrys fxze jbaj lauz' 
 
 # Variable de redireccion de login y logout
-LOGIN_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "recetas:home"
 LOGOUT_REDIRECT_URL = '/'
+
