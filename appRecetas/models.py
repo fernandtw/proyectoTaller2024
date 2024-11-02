@@ -28,12 +28,15 @@ class Post(models.Model):
     tabla = models.ImageField(
         upload_to="posts", null=True, blank=True, verbose_name="Tabla"
     )
-    published = models.BooleanField(default=False, verbose_name="Publicado")
     category = models.CharField(max_length=40, choices=CATEGORIAS, default='otros')
     created = models.DateTimeField(
         default=timezone.now, verbose_name="Fecha de creación"
     )
     update = models.DateTimeField(auto_now=True, verbose_name="Fecha de modificación")
+    likes = models.ManyToManyField(User, related_name='app_receras', verbose_name="Me Gusta")
+    
+    def total_likes(self):
+        return self.likes.count()
 
     class Meta:
         verbose_name = "Publicacion"
@@ -72,12 +75,15 @@ class Donaciones(models.Model):
         return f"{self.monto} - {self.metodoPago}"
 
 
-class MeGusta(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+# class MeGusta(models.Model):
+#     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    
+#     class Meta:
+#         unique_together = ('usuario', 'post')
 
-    def __str__(self):
-        return f"Me gusta de {self.usuario} a {self.post}"
+#     def __str__(self):
+#         return f"Me gusta de {self.usuario} a {self.post}"
 
 
 
