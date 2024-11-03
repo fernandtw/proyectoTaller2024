@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models 
 from django.contrib.auth.models import User
 from django.utils import timezone
 import uuid
@@ -45,6 +45,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
     
 class Contacto(models.Model):
     OPCIONES_CONSULTAS = [
@@ -75,15 +76,17 @@ class Donaciones(models.Model):
         return f"{self.monto} - {self.metodoPago}"
 
 
-# class MeGusta(models.Model):
-#     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    
-#     class Meta:
-#         unique_together = ('usuario', 'post')
-
-#     def __str__(self):
-#         return f"Me gusta de {self.usuario} a {self.post}"
 
 
 
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        if self.user:
+            return f'{self.user.username} - {self.body[:20]}'
+        return f'Comentario sin usuario - {self.body[:20]}' 

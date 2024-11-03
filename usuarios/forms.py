@@ -12,7 +12,7 @@ class CustomUserCreationForm(UserCreationForm):
 class PerfilForm(forms.ModelForm):
     class Meta:
         model = Perfil
-        fields = ["bio", "avatar"]
+        fields = ['avatar', 'bio']
 
 
 class EditarPerfilForm(forms.ModelForm):
@@ -61,4 +61,3 @@ class EditarPerfilForm(forms.ModelForm):
             raise forms.ValidationError("Este correo electrónico ya está en uso.")
         return email
 
-        
