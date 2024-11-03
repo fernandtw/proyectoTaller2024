@@ -13,7 +13,6 @@ class PostForm(forms.ModelForm):
             "instructions",
             "image",
             "tabla",
-            "published",
             "category",
         ]
         widgets = {

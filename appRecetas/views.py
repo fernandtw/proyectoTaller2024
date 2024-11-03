@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from .models import Post
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from .forms import PostForm, ContactoForm
 
 
@@ -156,3 +158,15 @@ def contacto(request):
         formulario = ContactoForm()  # Crear un nuevo formulario si no es un POST
 
     return render(request, "pages/ayudaUsuario/contacto.html", {'form': formulario})
+
+
+#Likes en un post
+
+@login_required
+def like(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return redirect('recetas:receta_detalle', post.id) 
