@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from .models import Post
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .forms import PostForm, ContactoForm
+from .forms import PostForm, ContactoForm, CommentForm
 
 
 
@@ -87,19 +87,28 @@ def eliminar_receta(request, id):
 
 def receta_detalle(request, receta_id):
     receta = get_object_or_404(Post, id=receta_id)
-    ingredientes = receta.ingredients.split(
-        "\n"
-    )  # Convertir los ingredientes en una lista
-    instrucciones = receta.instructions.split(
-        "\n"
-    )  # Convertir las instrucciones en una lista
+    ingredientes = receta.ingredients.split("\n")
+    instrucciones = receta.instructions.split("\n")
+    comments = receta.comments.all()
 
-    context = {
-        "receta": receta,
-        "ingredientes": ingredientes,
-        "instrucciones": instrucciones,
-    }
-    return render(request, "pages/recetas/receta_detalle.html", context)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = receta  # Asignar la receta al comentario
+            comment.user = request.user  # Asignar el usuario autenticado
+            comment.save()
+            return redirect('recetas:receta_detalle', receta_id=receta.id)
+    else:
+        form = CommentForm()
+
+    return render(request, 'pages/recetas/receta_detalle.html', {
+        'receta': receta,
+        'ingredientes': ingredientes,
+        'instrucciones': instrucciones,
+        'comments': comments,
+        'form': form,
+    })
 
 def busqueda_funcional(request):
     if request.method == "POST":
@@ -170,3 +179,22 @@ def like(request, post_id):
     else:
         post.likes.add(request.user)
     return redirect('recetas:receta_detalle', post.id) 
+
+
+
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    comments = post.comments.all()  # Obtiene todos los comentarios relacionados con el post
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)  # No lo guardamos aún
+            comment.post = post  # Asignamos el post al comentario
+            comment.save()  # Ahora sí, guardamos el comentario
+            return redirect('post_detail', post_id=post.id)  # Redirigimos a la misma página
+
+    else:
+        form = CommentForm()
+
+    return render(request, 'post_detail.html', {'post': post, 'form': form, 'comments': comments})

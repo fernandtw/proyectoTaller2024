@@ -1,4 +1,6 @@
 {% extends 'components/Layout/base.html' %} 
+{% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}Detalle Receta{% endblock %}
 {% block content %}
@@ -30,6 +32,11 @@
             <h2>Tabla Nutricional</h2>
             <img src="{{ receta.tabla.url }}" style="width: 20rem;" alt="{{ receta.title }}" class="img-fluid rounded mb-4">
           {% endif %}
+
+        
+          
+          
+
           <br><br>
           {% if user.is_authenticated %}
           <form action="{% url 'recetas:like_post' receta.id %}" method="post" style="display: inline;">  <!-- Asegúrate de usar el ID correcto -->
@@ -44,8 +51,36 @@
           {% endif %}
 
 
-        </article>
+          <h2>Comentarios...</h2>
 
+          <form method="post">
+              {% csrf_token %}
+              {{ form | crispy }}
+              <button type="submit" class="btn btn-primary">Enviar Comentario</button>
+              <hr>
+          </form>
+          
+          {% if comments %}
+              {% for comment in comments %}
+                  <div class="comment mb-3">
+                      <div class="comment-user d-flex align-items-center">
+                          {% if comment.user.perfil.avatar %}
+                              <img src="{{ comment.user.perfil.avatar.url }}" alt="{{ comment.user.username }}'s avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                          {% else %}
+                              <img src="{% static 'path/to/default/avatar.jpg' %}" alt="Default avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                          {% endif %}
+                          <strong>{{ comment.user.username }}</strong>
+                      </div>
+                      <p class="mt-2">{{ comment.body }}</p>
+                      <small class="text-muted">{{ comment.date_added }}</small>
+                  </div>
+              {% endfor %}
+          {% else %}
+              <p>No hay comentarios aún... Sé el primero en agregar uno.</p>
+          {% endif %}
+
+        </article>
+     
       </div>
     </div>
   </div>

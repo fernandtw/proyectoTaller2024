@@ -1,7 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from .models import Post, Contacto
+from .models import Post, Contacto, Comment
 
 class PostForm(forms.ModelForm):
 
@@ -29,3 +27,12 @@ class ContactoForm(forms.ModelForm):
         model = Contacto
         fields = ["nombre", "correo", "tipo_consulta", "mensaje", "avisos"]
         
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['body']
+        widgets = {
+            'body': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Escribe tu comentario...'}),
+        }
