@@ -39,7 +39,7 @@
 
           <br><br>
           {% if user.is_authenticated %}
-          <form action="{% url 'recetas:like_post' receta.id %}" method="post" style="display: inline;">  <!-- Asegúrate de usar el ID correcto -->
+          <form action="{% url 'recetas:like_post' receta.id %}" method="post" style="display: inline;" class="pt-5">  <!-- Asegúrate de usar el ID correcto -->
             {% csrf_token %}
             <button type="submit" class="btn {% if user in receta.likes.all %}btn-success{% else %}btn-danger{% endif %}">
                 <i class="bi bi-heart"></i>  <!-- Icono de corazón -->
@@ -50,8 +50,8 @@
             <p>Debes estar logueado para dar "Me gusta".</p>
           {% endif %}
 
-
-          <h2>Comentarios...</h2>
+          {% if user.is_authenticated %}
+          <h2 class="pt-5">Comentarios...</h2>
 
           <form method="post">
               {% csrf_token %}
@@ -77,6 +77,9 @@
               {% endfor %}
           {% else %}
               <p>No hay comentarios aún... Sé el primero en agregar uno.</p>
+          {% endif %}
+          {% else %}
+            <p>Debes estar logueado para "Comentar"</p>
           {% endif %}
 
         </article>

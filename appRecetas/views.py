@@ -180,7 +180,10 @@ def like(request, post_id):
         post.likes.add(request.user)
     return redirect('recetas:receta_detalle', post.id) 
 
-
+#Me gustas del usuario
+def user_likes(request):
+    liked_recetas = Post.objects.filter(likes=request.user)
+    return render(request, 'pages/usuario/mis_likes.html', {'liked_recetas': liked_recetas})
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
