@@ -19,12 +19,12 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'recetas:listar_recetas' %}">Administracion de recetas</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'recetas:gestionar_usuarios' %}">Administracion de usuarios</a>
+          </li>
           <!-- Puedes agregar más opciones para el staff aquí -->
         {% endif %}
         {% if request.user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="#">Mis Favoritos</a>
-          </li> 
           <li class="nav-item">
             <a class="nav-link" href="{% url 'usuarios:exit' %}">Salir</a>
           </li>         

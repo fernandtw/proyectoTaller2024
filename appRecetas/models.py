@@ -33,7 +33,7 @@ class Post(models.Model):
         default=timezone.now, verbose_name="Fecha de creación"
     )
     update = models.DateTimeField(auto_now=True, verbose_name="Fecha de modificación")
-    likes = models.ManyToManyField(User, related_name='app_receras', verbose_name="Me Gusta")
+    likes = models.ManyToManyField(User, related_name='app_recetas', verbose_name="Me Gusta")
     
     def total_likes(self):
         return self.likes.count()

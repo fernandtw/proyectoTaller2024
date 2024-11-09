@@ -4,8 +4,10 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test, login_required
 from .models import Post
+from usuarios.models import Perfil
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from .decorators import check_user_blocked
 from .forms import PostForm, ContactoForm, CommentForm
 
 
@@ -26,6 +28,7 @@ def home(request):
 
 
 # Vista de recetas
+@check_user_blocked
 def recetas(request):
     recetas = Post.objects.all()  # Transforma datos a una lista
     data = {"recetas": recetas}
@@ -81,10 +84,23 @@ def eliminar_receta(request, id):
     receta.delete()
     return redirect(to="recetas:listar_recetas")
 
+#Administracion usuarios
+@user_passes_test(is_admin)
+def gestionar_usuarios(request):
+    perfiles = Perfil.objects.filter(usuario__is_staff=False)
+    return render(request, 'pages/Admin/gestionar_usuarios.html', {'perfiles': perfiles})
+
+@user_passes_test(is_admin)
+def bloquear_usuario(request, usuario_id):
+    perfil = Perfil.objects.get(usuario_id=usuario_id)
+    perfil.is_blocked = not perfil.is_blocked
+    perfil.save()
+    return redirect('recetas:gestionar_usuarios')
+
 
 # Detalle receta
 
-
+@check_user_blocked
 def receta_detalle(request, receta_id):
     receta = get_object_or_404(Post, id=receta_id)
     ingredientes = receta.ingredients.split("\n")
@@ -109,7 +125,8 @@ def receta_detalle(request, receta_id):
         'comments': comments,
         'form': form,
     })
-
+    
+@check_user_blocked
 def busqueda_funcional(request):
     if request.method == "POST":
         searched = request.POST.get("busquedaFuncional")
@@ -127,7 +144,7 @@ def busqueda_funcional(request):
 
 
 #Ayuda
-
+@check_user_blocked
 def contacto(request):
     if request.method == "POST":
         formulario = ContactoForm(data=request.POST)
@@ -172,6 +189,7 @@ def contacto(request):
 #Likes en un post
 
 @login_required
+@check_user_blocked
 def like(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.user in post.likes.all():
@@ -180,11 +198,7 @@ def like(request, post_id):
         post.likes.add(request.user)
     return redirect('recetas:receta_detalle', post.id) 
 
-#Me gustas del usuario
-def user_likes(request):
-    liked_recetas = Post.objects.filter(likes=request.user)
-    return render(request, 'pages/usuario/mis_likes.html', {'liked_recetas': liked_recetas})
-
+@check_user_blocked
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     comments = post.comments.all()  # Obtiene todos los comentarios relacionados con el post

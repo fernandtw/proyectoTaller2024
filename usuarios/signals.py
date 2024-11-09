@@ -8,3 +8,4 @@ from .models import Perfil
 def crear_perfil(sender, instance, created, **kwargs):
     if created:
         Perfil.objects.get_or_create(usuario=instance)
+        
