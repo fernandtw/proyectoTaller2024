@@ -65,21 +65,6 @@ class Contacto(models.Model):
         return self.nombre
 
 
-class Donaciones(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuario",   null=True, blank=True)
-    monto = models.DecimalField(max_digits=10, decimal_places=2)
-    fecha = models.DateTimeField()
-    metodoPago = models.CharField(max_length=45)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)  # Ahora conectado con User directamente
-
-    def __str__(self):
-        return f"{self.monto} - {self.metodoPago}"
-
-
-
-
-
-
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
