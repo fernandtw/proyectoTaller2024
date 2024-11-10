@@ -297,6 +297,22 @@ body{
     }
 }
 
+.recipe-card {
+    transition: transform 0.2s;
+}
+
+.recipe-card:hover {
+    transform: scale(1.05);
+}
+
+.btn-ver-receta {
+    background-color: #007bff; /* Cambia esto al color que prefieras */
+    border: none;
+}
+
+.btn-ver-receta:hover {
+    background-color: #0056b3; /* Color al pasar el mouse */
+}
 
 
 

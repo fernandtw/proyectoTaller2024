@@ -33,7 +33,7 @@ class Post(models.Model):
         default=timezone.now, verbose_name="Fecha de creación"
     )
     update = models.DateTimeField(auto_now=True, verbose_name="Fecha de modificación")
-    likes = models.ManyToManyField(User, related_name='app_receras', verbose_name="Me Gusta")
+    likes = models.ManyToManyField(User, related_name='app_recetas', verbose_name="Me Gusta")
     
     def total_likes(self):
         return self.likes.count()
@@ -63,21 +63,6 @@ class Contacto(models.Model):
 
     def __str__(self):
         return self.nombre
-
-
-class Donaciones(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuario",   null=True, blank=True)
-    monto = models.DecimalField(max_digits=10, decimal_places=2)
-    fecha = models.DateTimeField()
-    metodoPago = models.CharField(max_length=45)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)  # Ahora conectado con User directamente
-
-    def __str__(self):
-        return f"{self.monto} - {self.metodoPago}"
-
-
-
-
 
 
 class Comment(models.Model):

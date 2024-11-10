@@ -17,14 +17,17 @@
         </li>
         {% if request.user.is_staff %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'recetas:listar_recetas' %}">Administracion de recetas</a>
+            <a class="nav-link" href="{% url 'recetas:listar_recetas' %}">Administrar recetas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'recetas:gestionar_usuarios' %}">Administrar usuarios</a>
           </li>
           <!-- Puedes agregar más opciones para el staff aquí -->
         {% endif %}
         {% if request.user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'usuarios:exit' %}">Salir</a>
-          </li>
+          </li>         
         {% else %} 
           <li class="nav-item">
             <a class="nav-link" href="{% url 'usuarios:login' %}">Ingresar</a>
@@ -33,7 +36,7 @@
             <a class="nav-link" href="{% url 'usuarios:register' %}">Registrarse</a>
           </li>
         {% endif %}
-        <li class="nav-item dropdown"> 
+        <li class="nav-item dropdown">
       </ul>
       <form class="d-flex container px-5" method="POST" action="{% url 'recetas:busqueda_funcional' %}">
         {% csrf_token %}
