@@ -1,30 +1,22 @@
 {% extends 'components/Layout/base.html' %} 
 {% load static %}
-{% load pagination_tags %}
-
 {% block content %}
-    <center id="busqueda">
-        {% if searched %}
-            <h1>Última búsqueda: {{ searched }}</h1>
-            <br>
-            {% for resultado in resultados %}
-                {% endfor %}
-            {% paginate resultados 10 %}
-                <div class="pagination">
-                    <span class="step-links">
-                        {% if resultados.has_previous %}
-                            <a href="?page={{ resultados.previous_page_number }}">anterior</a>
-                        {% endif %}
-                        <span class="current">
-                            Página {{ resultados.number }} de {{ resultados.paginator.num_pages }}
-                        </span>
-                        {% if resultados.has_next %}
-                            <a href="?page={{ resultados.next_page_number }}">siguiente</a>
-                        {% endif %}
-                    </span>
-                </div>
-            {% endpaginate %}
-        {% else %}
-            {% endif %}
+    <center id="busqueda">   
+    {% if searched %}
+        <h1>Última búsqueda: {{ searched }}</h1>
+        <br>
+    {% for resultados in resultados %}
+        <div class="card" style="width: 18rem;">
+            <img src="{{ resultados.image.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">{{resultados}}</h5>
+            <a href="{% url 'recetas:receta_detalle' resultados.id %}" class="btn btn-primary">Ver detalles</a>
+        </div>
+        </div>
+        <br>
+    {% endfor %}
+    {% else %}
+        <h1>Hey! olvido ingresar que es lo que quiere buscar</h1>
+    {% endif %}
     </center>
 {% endblock %}

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "appRecetas",
     "usuarios",
+    'pagination',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
