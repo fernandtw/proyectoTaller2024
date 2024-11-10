@@ -128,19 +128,26 @@ def receta_detalle(request, receta_id):
     
 @check_user_blocked
 def busqueda_funcional(request):
-    if request.method == "POST":
-        searched = request.POST.get("busquedaFuncional")
-        resultados = Post.objects.filter(title__contains=searched)
-        return render(
-            request,
-            "pages/post/busqueda.html",
-            {
-                "searched": searched,
-                "resultados": resultados,
-            },
-        )
+    searched = request.GET.get('searched')
+    
+    if searched:
+        resultados = Receta.objects.filter(nombre__icontains=searched)  # Ajusta el filtro según tu modelo
+
+        # Paginación
+        paginator = Paginator(resultados, 5)  # Muestra 10 resultados por página
+        page = request.GET.get('page')
+        try:
+            resultados = paginator.page(page)
+        except PageNotAnInteger:
+            # Si la página no es un entero, muestra la primera página
+            resultados = paginator.page(1)
+        except EmptyPage:
+            # Si la página está fuera de rango, muestra la última página
+            resultados = paginator.page(paginator.num_pages)
+
+        return render(request, 'busqueda.html', {'resultados': resultados, 'searched': searched})
     else:
-        return render(request, "pages/post/busqueda.html", {})
+        return render(request, 'busqueda.html', {'mensaje': 'Ingresa un término de búsqueda'})
 
 
 #Ayuda
