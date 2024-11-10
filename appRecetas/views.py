@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Count
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.contrib import messages
@@ -24,9 +25,16 @@ def is_admin(user):
 
 # Vista de inicio (home)
 def home(request):
-    recetas = Post.objects.all()  # Transforma datos a una lista
-    data = {"recetas": recetas}
-    return render(request, "index.html", data)
+    # Obtener todas las recetas
+    recetas = Post.objects.all()
+
+    # Obtener las tres recetas con más "me gusta"
+    top_posts = Post.objects.annotate(likes_count=Count('likes')).order_by('-likes_count')[:3]
+
+    return render(request, 'index.html', {
+        'recetas': recetas,
+        'top_posts': top_posts,
+    })
 
 
 # Vista de recetas
@@ -150,21 +158,30 @@ def receta_detalle(request, receta_id):
         'form': form,
     })
     
-@check_user_blocked
 def busqueda_funcional(request):
-    if request.method == "POST":
-        searched = request.POST.get("busquedaFuncional")
-        resultados = Post.objects.filter(title__contains=searched)
-        return render(
-            request,
-            "pages/post/busqueda.html",
-            {
-                "searched": searched,
-                "resultados": resultados,
-            },
-        )
+    searched = request.GET.get('busquedaFuncional', '')
+    if searched:
+        resultados_list = Post.objects.filter(title__icontains=searched)
+        paginator = Paginator(resultados_list, 2)  # 10 resultados por página
+        page_number = request.GET.get('page')
+        resultados = paginator.get_page(page_number)
+        
+        context = {
+            'searched': searched,
+            'resultados': resultados,
+        }
     else:
-        return render(request, "pages/post/busqueda.html", {})
+        context = {}
+    
+    return render(request, 'pages/post/busqueda.html', context)
+    
+#Recetas mas populares
+
+def top_recipes(request):
+    # Obtener las tres recetas con más "me gusta"
+    top_posts = Post.objects.annotate(likes_count=Count('likes')).order_by('-likes_count')[:3]
+
+    return render(request, 'your_template.html', {'top_posts': top_posts})
 
 #Ayuda
 @check_user_blocked

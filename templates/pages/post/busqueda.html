@@ -1,22 +1,60 @@
-{% extends 'components/Layout/base.html' %} 
+{% extends 'components/Layout/base.html' %}
 {% load static %}
 {% block content %}
-    <center id="busqueda">   
+  <center id="busqueda">
     {% if searched %}
-        <h1>Última búsqueda: {{ searched }}</h1>
-        <br>
-    {% for resultados in resultados %}
-        <div class="card" style="width: 18rem;">
-            <img src="{{ resultados.image.url }}" class="card-img-top" alt="...">
+      <h1 class="mb-4">Última búsqueda: {{ searched }}</h1>
+      
+      <div class="d-flex flex-column align-items-center">
+        {% for resultado in resultados %}
+          <div class="card mb-4" style="width: 15rem;">
+            <img src="{{ resultado.image.url }}" class="card-img-top" alt="...">
             <div class="card-body">
-            <h5 class="card-title">{{resultados}}</h5>
-            <a href="{% url 'recetas:receta_detalle' resultados.id %}" class="btn btn-primary">Ver detalles</a>
+              <h5 class="card-title">{{ resultado }}</h5>
+              <a href="{% url 'recetas:receta_detalle' resultado.id %}" class="btn btn-primary">Ver detalles</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if resultados.has_other_pages %}
+        <!-- Paginador dentro del centro -->
+        <div class="d-flex justify-content-center mt-4">
+          <ul class="pagination">
+            {% if resultados.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&page={{ resultados.previous_page_number }}">Anterior</a>
+              </li>
+            {% endif %}
+
+            {% for page in resultados.paginator.page_range %}
+              {% if page == resultados.number %}
+                <li class="page-item active" aria-current="page">
+                  <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&page={{ page }}">{{ page }}</a>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&page={{ page }}">{{ page }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% if resultados.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&page={{ resultados.next_page_number }}">Siguiente</a>
+              </li>
+            {% endif %}
+          </ul>
         </div>
-        </div>
-        <br>
-    {% endfor %}
+      {% endif %}
+
     {% else %}
-        <h1>Hey! olvido ingresar que es lo que quiere buscar</h1>
+      <h1>¡Hey! Olvidaste ingresar lo que deseas buscar.</h1>
     {% endif %}
-    </center>
+  </center>
 {% endblock %}
+
+
+
+
+

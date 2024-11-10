@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
 body {
   margin: 0;
   padding: 0;
@@ -8,16 +11,46 @@ main {
     flex: 1;
 
 }
-/* Carrusel */
-#carouselExampleIndicators {
-    max-width: 1400px; /* Ancho máximo del carrusel */
-    margin: 0 auto; /* Centrar el carrusel en la página */
+
+/* Recetas mas populares */
+
+.title_populares {
+    font-family: "Dancing Script", cursive;
+    font-size: 5em;
+    font-optical-sizing: auto;
+    font-weight: normal; /* Cambié 'weight' por 'normal' o puedes especificar un valor numérico */
+    font-style: normal;
+    transition: all 0.3s ease; /* Añade una transición suave */
 }
-/* Estilo para las imágenes del carrusel */
-.carousel-item img {
-    height: 500px; /* Altura fija para las imágenes */
-    object-fit: cover; /* Asegura que las imágenes cubran el área sin distorsionarse */
+
+.title_populares:hover {
+    color: #D91656; /* Cambia el color del texto al pasar el mouse */
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Añade sombra al texto */
 }
+
+.card_top {
+    transition: background 0.3s ease; /* Transición suave para el fondo */
+    background: linear-gradient(45deg, #FF77B7, #FF9C73); /* Gradiente inicial */
+    font-family: "Source Sans 3", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}
+
+.category-white {
+    color: white !important; /* Establece el color blanco para la categoría */
+}
+
+.read-more-white {
+    color: white; /* Establece el color blanco para el enlace "Seguir leyendo" */
+}
+
+.card_top:hover {
+    background: linear-gradient(45deg, #FC4100, #FF7777); /* Gradiente al pasar el mouse */
+
+}
+
+
 
 /* Estilos adicionales para el footer */
 .footer {
@@ -28,6 +61,8 @@ main {
     margin-top: 22rem;
       
 }
+
+
 .container_footer{
     display: flex;
     flex-direction: column;
@@ -235,7 +270,6 @@ body{
 
 /* Estilo para el enlace "Seguir leyendo" */
 .card_body_recetas .stretched-link {
-    color: #007bff; /* Color del enlace */
     text-decoration: none; /* Sin subrayado */
 }
 

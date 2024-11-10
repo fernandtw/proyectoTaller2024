@@ -38,7 +38,7 @@
         {% endif %}
         <li class="nav-item dropdown">
       </ul>
-      <form class="d-flex container px-5" method="POST" action="{% url 'recetas:busqueda_funcional' %}">
+      <form class="d-flex container px-5" method="GET" action="{% url 'recetas:busqueda_funcional' %}">
         {% csrf_token %}
         <input class="form-control ms-5 w-30" type="search" placeholder="Buscar" aria-label="Buscar" autocapitalize="none" 
         autocomplete="off" autocorrect="off" tabindex="0" spellcheck="false" name="busquedaFuncional">
