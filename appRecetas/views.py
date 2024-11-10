@@ -9,6 +9,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .decorators import check_user_blocked
 from .forms import PostForm, ContactoForm, CommentForm
+from django.core.paginator import Paginator
+from django.http import Http404
 
 
 
@@ -31,7 +33,17 @@ def home(request):
 @check_user_blocked
 def recetas(request):
     recetas = Post.objects.all()  # Transforma datos a una lista
-    data = {"recetas": recetas}
+    page = request.GET.get('page', 1)
+
+    try:
+        paginator = Paginator(recetas, 5)
+        recetas = paginator.page(page)
+
+    except:
+        raise Http404
+
+    data = {"entity": recetas,
+            'paginator': paginator}
     return render(request, "pages/recetas/lista_recetas.html", data)
 
 
@@ -55,8 +67,20 @@ def agregar_receta(request):
 @user_passes_test(is_admin)
 def listar_recetas(request):
     recetas = Post.objects.all()  # Asegúrate de usar la clase Post correctamente
+    page = request.GET.get('page', 1)
+
+    try:
+        paginator = Paginator(recetas, 5)
+        recetas = paginator.page(page)
+
+    except:
+        raise Http404
+         
+
+
     data = {
-        "recetas": recetas  # Cambia 'Post' por 'recetas' para que sea más descriptivo
+        "entity": recetas,  # Cambia 'Post' por 'recetas' para que sea más descriptivo
+        'paginator': paginator
     }
     return render(request, "pages/Admin/listar.html", data)
 

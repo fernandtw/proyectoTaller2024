@@ -19,7 +19,7 @@
           <th>Categoría</th>
           <th>Opciones</th>
         </tr>
-        {% for p in recetas %}
+        {% for p in entity %}
           <tr>
             <td>{{ p.title | title }}</td>
             <td>{{ p.ingredients | truncatewords:5 }}</td>
@@ -42,6 +42,9 @@
           </tr>
         {% endfor %}
       </table>
-    </div>
+      <div>
+        {% include 'pages/paginator.html' %}
+      </div>
   </div>
+</div>
 {% endblock %}
