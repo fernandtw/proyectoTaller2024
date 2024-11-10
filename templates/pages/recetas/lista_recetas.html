@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-  {% for p in recetas %}
+  {% for p in entity %}
       <div class="contenedor_recetas col-md-8">
         <div class="card">
           <div class="row g-0">
@@ -19,5 +19,10 @@
             </div>
           </div>
         </div>
+        
+        
   {% endfor %}
+  <div>
+    {% include 'pages/paginator.html' %}
+  </div>
 {% endblock %}
