@@ -16,4 +16,3 @@ class Perfil(models.Model):
         return self.usuario.username
 
 # Create your models here.
-
