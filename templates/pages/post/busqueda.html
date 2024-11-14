@@ -2,6 +2,18 @@
 {% load static %}
 {% block content %}
   <center id="busqueda">
+    <form method="GET" class="mb-4">
+      <input type="text" name="busquedaFuncional" value="{{ searched }}" class="invisible" placeholder="Buscar..." />
+      <select name="categoria">
+        <option value="">Todas las categorías</option>
+        {% for categoria in categorias %}
+          <option value="{{ categoria.0 }}" {% if categoria.0 == categoria_seleccionada %}selected{% endif %}>
+            {{ categoria.1 }}
+          </option>
+        {% endfor %}
+      </select>
+      <button type="submit">Buscar</button>
+    </form>
     {% if searched %}
       <h1 class="mb-4">Última búsqueda: {{ searched }}</h1>
       
@@ -23,25 +35,25 @@
           <ul class="pagination">
             {% if resultados.has_previous %}
               <li class="page-item">
-                <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&page={{ resultados.previous_page_number }}">Anterior</a>
+                <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&categoria={{ categoria_seleccionada }}&page={{ resultados.previous_page_number }}">Anterior</a>
               </li>
             {% endif %}
 
             {% for page in resultados.paginator.page_range %}
               {% if page == resultados.number %}
                 <li class="page-item active" aria-current="page">
-                  <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&page={{ page }}">{{ page }}</a>
+                  <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&categoria={{ categoria_seleccionada }}&page={{ page }}">{{ page }}</a>
                 </li>
               {% else %}
                 <li class="page-item">
-                  <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&page={{ page }}">{{ page }}</a>
+                  <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&categoria={{ categoria_seleccionada }}&page={{ page }}">{{ page }}</a>
                 </li>
               {% endif %}
             {% endfor %}
 
             {% if resultados.has_next %}
               <li class="page-item">
-                <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&page={{ resultados.next_page_number }}">Siguiente</a>
+                <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&categoria={{ categoria_seleccionada }}&page={{ resultados.next_page_number }}">Siguiente</a>
               </li>
             {% endif %}
           </ul>

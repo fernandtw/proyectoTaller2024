@@ -4,7 +4,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test, login_required
-from .models import Post
+from .models import Post, CATEGORIAS
 from usuarios.models import Perfil
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -160,19 +160,26 @@ def receta_detalle(request, receta_id):
     
 def busqueda_funcional(request):
     searched = request.GET.get('busquedaFuncional', '')
+    category = request.GET.get('categoria', '')
+    resultados_list = Post.objects.all()
+
     if searched:
-        resultados_list = Post.objects.filter(title__icontains=searched)
-        paginator = Paginator(resultados_list, 2)  # 10 resultados por página
-        page_number = request.GET.get('page')
-        resultados = paginator.get_page(page_number)
-        
-        context = {
-            'searched': searched,
-            'resultados': resultados,
-        }
-    else:
-        context = {}
-    
+        resultados_list = resultados_list.filter(title__icontains=searched)
+
+    if category:
+        resultados_list = resultados_list.filter(category=category)
+
+    paginator = Paginator(resultados_list, 2)
+    page_number = request.GET.get('page')
+    resultados = paginator.get_page(page_number)
+
+    context = {
+        'searched': searched,
+        'resultados': resultados,
+        'categorias': CATEGORIAS,
+        'categoria_seleccionada': category,
+    }
+
     return render(request, 'pages/post/busqueda.html', context)
     
 #Recetas mas populares
