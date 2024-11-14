@@ -15,7 +15,7 @@ CATEGORIAS = [
     ('ensalada', 'Ensalada'),
     ('mariscos', 'Mariscos'),
     ('carnes', 'Carnes'),
-        ('vegetariano', 'Vegetariano'),
+    ('vegetariano', 'Vegetariano'),
     ('otros', 'Otros'),
 ]
 class Post(models.Model):
@@ -24,10 +24,10 @@ class Post(models.Model):
     ingredients = models.TextField(default="", verbose_name="Ingredientes")
     instructions = models.TextField(default="", verbose_name="Instrucciones")
     image = models.ImageField(
-        upload_to="posts", null=True, blank=True, verbose_name="Imagen"
+        upload_to="posts", default="", verbose_name="Imagen"
     )
     tabla = models.ImageField(
-        upload_to="posts", null=True, blank=True, verbose_name="Tabla"
+        upload_to="posts", default="", verbose_name="Tabla"
     )
     category = models.CharField(max_length=40, choices=CATEGORIAS, default='otros')
     created = models.DateTimeField(
@@ -68,7 +68,7 @@ class Contacto(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
 
