@@ -38,10 +38,21 @@
         {% endif %}
         <li class="nav-item dropdown">
       </ul>
-      <form class="d-flex container px-5" method="GET" action="{% url 'recetas:busqueda_funcional' %}">
+      <form class="d-flex align-items-center" method="GET" action="{% url 'recetas:busqueda_funcional' %}">
         {% csrf_token %}
-        <input class="form-control ms-5 w-30" type="search" placeholder="Buscar" aria-label="Buscar" autocapitalize="none" 
-        autocomplete="off" autocorrect="off" tabindex="0" spellcheck="false" name="busquedaFuncional">
+        
+        <!-- Campo de texto para buscar por nombre -->
+        <input type="text" name="busquedaFuncional" value="{{ searched }}" class="form-control me-2" placeholder="Buscar por nombre..." aria-label="Buscar por nombre">
+        
+        <!-- Selector de categoría -->
+        <select class="form-select me-2" name="categoria">
+          <option value="">Todas las categorías</option>
+          {% for categoria in categorias %}
+            <option value="{{ categoria.0 }}" {% if categoria.0 == categoria_seleccionada %}selected{% endif %}>{{ categoria.1 }}</option>
+          {% endfor %}
+        </select>
+        
+        <!-- Botón de búsqueda -->
         <button class="btn btn-outline-success-coral" type="submit">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>

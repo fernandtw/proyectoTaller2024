@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
   <center id="busqueda">
-    <form method="GET" class="mb-4">
+    <!-- <form method="GET" class="mb-4">
       <input type="text" name="busquedaFuncional" value="{{ searched }}" class="invisible" placeholder="Buscar..." />
       <select name="categoria">
         <option value="">Todas las categorías</option>
@@ -13,7 +13,7 @@
         {% endfor %}
       </select>
       <button type="submit">Buscar</button>
-    </form>
+    </form> -->
     {% if searched %}
       <h1 class="mb-4">Última búsqueda: {{ searched }}</h1>
       
@@ -31,7 +31,7 @@
 
       {% if resultados.has_other_pages %}
         <!-- Paginador dentro del centro -->
-        <div class="d-flex justify-content-center mt-4">
+        <div class="d-flex justify-content-center mb-5 pb-5">
           <ul class="pagination">
             {% if resultados.has_previous %}
               <li class="page-item">
