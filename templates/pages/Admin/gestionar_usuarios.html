@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for perfil in perfiles %}
+        {% for perfil in entity %}
           <tr>
             <td>{{ perfil.usuario.username }}</td>
             <td>{{ perfil.usuario.email }}</td>
@@ -41,6 +41,9 @@
         {% endfor %}
       </tbody>
     </table>
+    <div>
+      {% include 'pages/paginator.html' %}
+    </div>
   </div>
 </div>
 {% endblock %}

@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "appRecetas",
     "usuarios",
-    'pagination',
+
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -161,4 +161,5 @@ EMAIL_USE_TLS = True
 # Variable de redireccion de login y logout
 LOGIN_REDIRECT_URL = "recetas:home"
 LOGOUT_REDIRECT_URL = '/'
+
 
