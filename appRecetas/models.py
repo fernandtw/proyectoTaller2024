@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models import Count
+from utils.custom_image import customize_image
 import uuid
 # Recetas post
 
@@ -46,6 +47,13 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        if self.image:
+            # Personalizar la imagen antes de guardarla
+            self.image = customize_image(self.image, size=(450, 550), quality=85, optimize=True)
+        
+        super(Post, self).save(*args, **kwargs)
 
     
 class Contacto(models.Model):

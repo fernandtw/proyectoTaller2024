@@ -8,13 +8,14 @@
         <div class="card">
           <div class="row g-0">
             <div class="card_receta col-md-5">
-              <img src="{{ p.image.url }}" class="img-fluid rounded-start" alt="...">
+              <img src="{{ p.image.url }}" class="img-fluid rounded-start image" alt="...">
             </div>
             <div class="col-md-7">
               <div class="card_body_recetas card-body">
                 <strong class="d-inline-block mb-2 text-primary">{{ p.category }}</strong>
                 <h4 class="mb-0">{{ p.title }}</h4>
                 <p class="card-text mb-auto">{{ p.ingredients |truncatewords:30 }}</p>
+                <p class="text-muted mt-3">Publicado el {{ p.created|date:"d M Y" }}</p>
                 <p class="card-text"><small class="text-muted"><a href="{% url 'recetas:receta_detalle' p.id %}" class="stretched-link">Seguir leyendo</a></small></p>
               </div>
             </div>

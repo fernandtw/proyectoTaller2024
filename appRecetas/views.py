@@ -26,16 +26,15 @@ def is_admin(user):
 # Vista de inicio (home)
 def home(request):
     # Obtener todas las recetas
-    recetas = Post.objects.all()
+    recetas = Post.objects.all().order_by('-created')
 
-    # Obtener las tres recetas con más "me gusta"
-    top_posts = Post.objects.annotate(likes_count=Count('likes')).order_by('-likes_count')[:3]
+    # Obtener las tres recetas con más "me gusta" llamando a la función
+    top_posts = get_top_posts()
 
     return render(request, 'index.html', {
         'recetas': recetas,
         'top_posts': top_posts,
     })
-
 
 # Vista de recetas
 @check_user_blocked
@@ -184,12 +183,14 @@ def busqueda_funcional(request):
     
 #Recetas mas populares
 
-def top_recipes(request):
-    # Obtener las tres recetas con más "me gusta"
-    top_posts = Post.objects.annotate(likes_count=Count('likes')).order_by('-likes_count')[:3]
 
-    return render(request, 'your_template.html', {'top_posts': top_posts})
-
+def get_top_posts(limit=3):
+    """Obtiene las recetas más populares, ordenadas por likes y fecha de creación."""
+    return Post.objects.annotate(
+        likes_count=Count('likes')
+    ).order_by('-likes_count', '-created')[:limit]
+    
+    
 #Ayuda
 @check_user_blocked
 def contacto(request):

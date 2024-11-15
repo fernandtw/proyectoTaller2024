@@ -12,6 +12,7 @@ main {
 
 }
 
+
 /* Recetas mas populares */
 
 .title_populares {
@@ -50,6 +51,79 @@ main {
 
 }
 
+/* Cards generales */
+
+/* Estilos generales para el contenedor de recetas */
+.contenedor_recetas {
+    display: flex;
+    flex-direction: column; /* Cambiar a columna para una mejor organización */
+    align-items: center; /* Centrar las tarjetas */
+    width: 100%; /* Ancho completo de la ventana */
+    height: auto; /* Altura completa de la ventana */
+    overflow-y: auto; /* Permitir el desplazamiento vertical si es necesario */
+    padding: 5px; /* Espaciado interno */
+    box-sizing: border-box; /* Incluir padding en el ancho y alto total */
+    margin: 0px;
+}
+
+/* Estilo para cada tarjeta */
+.card {
+    width: 35rem; 
+    height: 100%;/* Ancho completo del contenedor */
+    max-width: 800px; /* Ancho máximo del contenedor de tarjetas */
+    border: none; /* Sin borde */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin: 10px 0; /* Margen entre tarjetas */
+    transition: transform 0.2s; /* Efecto de hover */
+    margin-top: 50px;
+    margin-bottom: 0.5rem;
+}
+
+/* Efecto al pasar el mouse sobre la tarjeta */
+.card:hover {
+    transform: scale(1.02); /* Aumentar ligeramente al pasar el ratón */
+}
+
+/* Estilo para la imagen de la receta */
+.card_receta img {
+    width: 100%; /* Ancho completo de la tarjeta */
+    height: 100%; /* Altura automática para mantener la proporción */
+    border-top-left-radius: 10px; /* Bordes redondeados en la parte superior */
+    border-top-right-radius: 10px; /* Bordes redondeados en la parte superior */
+    object-fit: countain;
+}
+
+/* Estilo para el cuerpo de la tarjeta */
+.card_body_recetas {
+    padding: 15px; /* Padding interno */
+}
+
+/* Estilo para el título */
+.card_body_recetas h4 {
+    font-size: 1.5rem; /* Tamaño de fuente más grande */
+    margin-bottom: 10px; /* Espacio debajo del título */
+}
+
+/* Estilo para la categoría */
+.card_body_recetas .text-primary {
+    font-weight: bold; /* Negrita */
+}
+
+/* Estilo para el texto de los ingredientes */
+.card_body_recetas .card-text {
+    color: #555; /* Color de texto más suave */
+    margin-bottom: 15px; /* Espacio debajo del texto */
+}
+
+/* Estilo para el enlace "Seguir leyendo" */
+.card_body_recetas .stretched-link {
+    text-decoration: none; /* Sin subrayado */
+}
+
+.card_body_recetas .stretched-link:hover {
+    text-decoration: underline; /* Subrayar al pasar el ratón */
+}
 
 
 /* Estilos adicionales para el footer */
@@ -206,76 +280,7 @@ body{
 }
 
 
-/* Estilos generales para el contenedor de recetas */
-.contenedor_recetas {
-    display: flex;
-    flex-direction: column; /* Cambiar a columna para una mejor organización */
-    align-items: center; /* Centrar las tarjetas */
-    width: 100%; /* Ancho completo de la ventana */
-    height: auto; /* Altura completa de la ventana */
-    overflow-y: auto; /* Permitir el desplazamiento vertical si es necesario */
-    padding: 5px; /* Espaciado interno */
-    box-sizing: border-box; /* Incluir padding en el ancho y alto total */
-    margin: 0px;
-}
 
-/* Estilo para cada tarjeta */
-.card {
-    width: 100%; /* Ancho completo del contenedor */
-    max-width: 800px; /* Ancho máximo del contenedor de tarjetas */
-    border: none; /* Sin borde */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    margin: 10px 0; /* Margen entre tarjetas */
-    transition: transform 0.2s; /* Efecto de hover */
-    margin-top: 50px;
-    margin-bottom: 0.5rem;
-}
-
-/* Efecto al pasar el mouse sobre la tarjeta */
-.card:hover {
-    transform: scale(1.02); /* Aumentar ligeramente al pasar el ratón */
-}
-
-/* Estilo para la imagen de la receta */
-.card_receta img {
-    width: 100%; /* Ancho completo de la tarjeta */
-    height: auto; /* Altura automática para mantener la proporción */
-    border-top-left-radius: 10px; /* Bordes redondeados en la parte superior */
-    border-top-right-radius: 10px; /* Bordes redondeados en la parte superior */
-    object-fit: cover;
-}
-
-/* Estilo para el cuerpo de la tarjeta */
-.card_body_recetas {
-    padding: 15px; /* Padding interno */
-}
-
-/* Estilo para el título */
-.card_body_recetas h4 {
-    font-size: 1.5rem; /* Tamaño de fuente más grande */
-    margin-bottom: 10px; /* Espacio debajo del título */
-}
-
-/* Estilo para la categoría */
-.card_body_recetas .text-primary {
-    font-weight: bold; /* Negrita */
-}
-
-/* Estilo para el texto de los ingredientes */
-.card_body_recetas .card-text {
-    color: #555; /* Color de texto más suave */
-    margin-bottom: 15px; /* Espacio debajo del texto */
-}
-
-/* Estilo para el enlace "Seguir leyendo" */
-.card_body_recetas .stretched-link {
-    text-decoration: none; /* Sin subrayado */
-}
-
-.card_body_recetas .stretched-link:hover {
-    text-decoration: underline; /* Subrayar al pasar el ratón */
-}
 
 /* Header */
 .header-bg {

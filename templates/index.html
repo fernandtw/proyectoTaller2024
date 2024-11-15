@@ -27,6 +27,7 @@
                 <p class="card-text">
                   <small class="text-muted">Me gusta: {{ p.likes.count }}</small>
                 </p>
+                <p class="text-muted mt-3">Publicado el {{ p.created|date:"d M Y" }}</p>
               </div>
             </div>
           </div>
