@@ -17,10 +17,12 @@ main {
 
 .hero_title{
     font-family: "Edu AU VIC WA NT Hand", cursive;
-    font-size: 70px;
+    font-size: 7rem;
     font-optical-sizing: auto;
     font-weight: weight;
     font-style: normal;
+    text-align: center;
+    align-items: center;
 }
 
 .hero_title {
@@ -123,14 +125,14 @@ main {
 }
 
 .recipe-card h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 1rem;
     font-family: "Fira Sans", sans-serif;
 }
 
 .recipe-card li {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     line-height: 1.5;
     margin-bottom: 0.5rem;
 }
@@ -138,6 +140,20 @@ main {
 
 
 /* Estilos generales para el contenedor de recetas */
+
+.like-form {
+    display: flex;
+    justify-content: flex-end; /* Alinea el formulario a la derecha */
+    margin-right: 15rem;
+    padding-right: 1rem;
+}
+
+.like-form button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .contenedor_recetas {
     display: flex;
     flex-direction: column; /* Cambiar a columna para una mejor organización */
@@ -207,6 +223,23 @@ main {
 
 .card_body_recetas .stretched-link:hover {
     text-decoration: underline; /* Subrayar al pasar el ratón */
+}
+
+.recipe-card {
+    transition: transform 0.2s;
+}
+
+.recipe-card:hover {
+    transform: scale(1.03);
+}
+
+.btn-ver-receta {
+    background-color: #007bff; /* Cambia esto al color que prefieras */
+    border: none;
+}
+
+.btn-ver-receta:hover {
+    background-color: #0056b3; /* Color al pasar el mouse */
 }
 
 
@@ -420,22 +453,6 @@ body{
     }
 }
 
-.recipe-card {
-    transition: transform 0.2s;
-}
-
-.recipe-card:hover {
-    transform: scale(1.05);
-}
-
-.btn-ver-receta {
-    background-color: #007bff; /* Cambia esto al color que prefieras */
-    border: none;
-}
-
-.btn-ver-receta:hover {
-    background-color: #0056b3; /* Color al pasar el mouse */
-}
 
 
 
