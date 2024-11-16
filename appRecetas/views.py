@@ -4,7 +4,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test, login_required
-from .models import Post
+from .models import Post, CATEGORIAS
 from usuarios.models import Perfil
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -27,16 +27,15 @@ def is_admin(user):
 # Vista de inicio (home)
 def home(request):
     # Obtener todas las recetas
-    recetas = Post.objects.all()
+    recetas = Post.objects.all().order_by('-created')
 
-    # Obtener las tres recetas con más "me gusta"
-    top_posts = Post.objects.annotate(likes_count=Count('likes')).order_by('-likes_count')[:3]
+    # Obtener las tres recetas con más "me gusta" llamando a la función
+    top_posts = get_top_posts()
 
     return render(request, 'index.html', {
         'recetas': recetas,
         'top_posts': top_posts,
     })
-
 
 # Vista de recetas
 @check_user_blocked
@@ -179,29 +178,38 @@ def receta_detalle(request, receta_id):
 
 def busqueda_funcional(request):
     searched = request.GET.get('busquedaFuncional', '')
+    category = request.GET.get('categoria', '')
+    resultados_list = Post.objects.all()
+
     if searched:
-        resultados_list = Post.objects.filter(title__icontains=searched)
-        paginator = Paginator(resultados_list, 2)  # 10 resultados por página
-        page_number = request.GET.get('page')
-        resultados = paginator.get_page(page_number)
-        
-        context = {
-            'searched': searched,
-            'resultados': resultados,
-        }
-    else:
-        context = {}
-    
+        resultados_list = resultados_list.filter(title__icontains=searched)
+
+    if category:
+        resultados_list = resultados_list.filter(category=category)
+
+    paginator = Paginator(resultados_list, 2)
+    page_number = request.GET.get('page')
+    resultados = paginator.get_page(page_number)
+
+    context = {
+        'searched': searched,
+        'resultados': resultados,
+        'categorias': CATEGORIAS,
+        'categoria_seleccionada': category,
+    }
+
     return render(request, 'pages/post/busqueda.html', context)
     
 #Recetas mas populares
 
-def top_recipes(request):
-    # Obtener las tres recetas con más "me gusta"
-    top_posts = Post.objects.annotate(likes_count=Count('likes')).order_by('-likes_count')[:3]
 
-    return render(request, 'your_template.html', {'top_posts': top_posts})
-
+def get_top_posts(limit=3):
+    """Obtiene las recetas más populares, ordenadas por likes y fecha de creación."""
+    return Post.objects.annotate(
+        likes_count=Count('likes')
+    ).order_by('-likes_count', '-created')[:limit]
+    
+    
 #Ayuda
 @check_user_blocked
 def contacto(request):

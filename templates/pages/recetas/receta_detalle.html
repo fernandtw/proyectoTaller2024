@@ -5,10 +5,10 @@
 {% block title %}Detalle Receta{% endblock %}
 {% block content %}
 
-  <div class="container my-5 align-items-center justify-content-center">
+  <div class="container-fluid my-5 align-items-center justify-content-center">
     <div class="row">
       <div class="col-lg-8 mx-auto">
-        <article>
+        <article class="recipe-card d-flex align-items-center">
           <h1 class="mb-4">{{ receta.title }}</h1>
           {% if receta.image %}
             <img src="{{ receta.image.url }}" alt="{{ receta.title }}" class="img-fluid rounded mb-4">
@@ -39,10 +39,10 @@
 
           <br><br>
           {% if user.is_authenticated %}
-          <form action="{% url 'recetas:like_post' receta.id %}" method="post" style="display: inline;" class="pt-5">  <!-- Asegúrate de usar el ID correcto -->
+          <form action="{% url 'recetas:like_post' receta.id %}" method="post" class="like-form">  <!-- Asegúrate de usar el ID correcto -->
             {% csrf_token %}
             <button type="submit" class="btn {% if user in receta.likes.all %}btn-success{% else %}btn-danger{% endif %}">
-                <i class="bi bi-heart"></i>  <!-- Icono de corazón -->
+                <i class="bi bi-heart me-2"></i>  <!-- Icono de corazón -->
                 <span class="badge">{{ receta.likes.count }}</span>  <!-- Contador de "Me gusta" -->
             </button>
           </form>
@@ -51,7 +51,7 @@
           {% endif %}
 
           {% if user.is_authenticated %}
-          <h2 class="pt-5">Comentarios...</h2>
+          <h2 class="pt-5 text-end me-5 pe-4">Comentarios...</h2>
 
           <form method="post">
               {% csrf_token %}
@@ -66,8 +66,8 @@
           
           {% if comments %}
               {% for comment in comments %}
-                  <div class="comment mb-3">
-                      <div class="comment-user d-flex align-items-center">
+                  <div class="comment mb-3 me-5">
+                      <div class="comment-user">
                           {% if comment.user.perfil.avatar %}
                               <img src="{{ comment.user.perfil.avatar.url }}" alt="{{ comment.user.username }}'s avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
                           {% else %}
