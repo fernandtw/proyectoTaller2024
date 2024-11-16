@@ -5,10 +5,10 @@
 {% block title %}Detalle Receta{% endblock %}
 {% block content %}
 
-  <div class="container my-5 align-items-center justify-content-center">
+  <div class="container-fluid my-5 align-items-center justify-content-center">
     <div class="row">
       <div class="col-lg-8 mx-auto">
-        <article>
+        <article class="recipe-card d-flex align-items-center">
           <h1 class="mb-4">{{ receta.title }}</h1>
           {% if receta.image %}
             <img src="{{ receta.image.url }}" alt="{{ receta.title }}" class="img-fluid rounded mb-4">

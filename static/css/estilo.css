@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
 
 }
 main {
@@ -12,6 +13,45 @@ main {
 
 }
 
+/* Home titulo */
+
+.hero_title{
+    font-family: "Edu AU VIC WA NT Hand", cursive;
+    font-size: 70px;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}
+
+.hero_title {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.hero_title:hover {
+    transform: scale(1.05);
+    color: #FA4032;
+}
+
+
+.hero-section {
+    background-image: url('../images/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    padding: 100px 0;
+}
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
 
 /* Recetas mas populares */
 
@@ -51,7 +91,51 @@ main {
 
 }
 
-/* Cards generales */
+/* Detalle receta */
+
+.recipe-card {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+    max-width: 800px; /* Adjust as needed */
+    margin: 0 auto; /* Center the card horizontally */
+}
+
+.recipe-card {
+    display: flex;
+    flex-direction: column;
+  /* ... otros estilos */
+}
+
+.recipe-card img {
+    flex: 1; /* La imagen ocupará todo el espacio disponible */
+    object-fit: cover; /* La imagen se ajustará al contenedor sin distorsionarse */
+    max-width: 50%; /* La imagen ocupará como máximo el 50% del ancho de su contenedor */
+    height: auto; /* La altura se ajustará automáticamente para mantener la proporción de la imagen */
+}
+
+.recipe-card h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    font-family: "Edu AU VIC WA NT Hand", cursive;
+}
+
+.recipe-card h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    font-family: "Fira Sans", sans-serif;
+}
+
+.recipe-card li {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+
 
 /* Estilos generales para el contenedor de recetas */
 .contenedor_recetas {
@@ -261,7 +345,7 @@ body{
     background-color: #87A2FF; /* Color inicial */
     transition: background-color 0.3s ease;
 }
-  
+
 .card_perfil_contenido:hover {
     background-color: #B7E0FF; /* Color al hacer hover */
 }
@@ -270,7 +354,7 @@ body{
     margin: 1rem;
     padding: 2em;
 }
-  
+
 
 /* Barra de busqueda */
 
