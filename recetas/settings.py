@@ -164,3 +164,4 @@ else:
 LOGIN_REDIRECT_URL = "recetas:home"
 LOGOUT_REDIRECT_URL = '/'
 
+

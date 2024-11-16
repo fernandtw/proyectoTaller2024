@@ -56,6 +56,10 @@
           <form method="post">
               {% csrf_token %}
               {{ form | crispy }}
+
+              {% if form.non_field_errors %}
+              
+              {% endif %}
               <button type="submit" class="btn btn-primary">Enviar Comentario</button>
               <hr>
           </form>

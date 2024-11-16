@@ -12,6 +12,7 @@ from .decorators import check_user_blocked
 from .forms import PostForm, ContactoForm, CommentForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
+from .filters import PROHIBITED_WORDS
 
 
 
@@ -119,7 +120,16 @@ def eliminar_receta(request, id):
 @user_passes_test(is_admin)
 def gestionar_usuarios(request):
     perfiles = Perfil.objects.filter(usuario__is_staff=False)
-    return render(request, 'pages/Admin/gestionar_usuarios.html', {'perfiles': perfiles})
+    page = request.GET.get('page', 1)
+    
+    try:
+        paginator = Paginator(perfiles, 4)
+        perfiles = paginator.page(page)
+
+    except:
+        raise Http404
+
+    return render(request, 'pages/Admin/gestionar_usuarios.html', {'entity': perfiles, 'paginator': paginator})
 
 @user_passes_test(is_admin)
 def bloquear_usuario(request, usuario_id):
@@ -131,21 +141,30 @@ def bloquear_usuario(request, usuario_id):
 
 # Detalle receta
 
+
 @check_user_blocked
 def receta_detalle(request, receta_id):
     receta = get_object_or_404(Post, id=receta_id)
     ingredientes = receta.ingredients.split("\n")
     instrucciones = receta.instructions.split("\n")
-    comments = receta.comments.all()
+
+    # Filtrar comentarios usando is_comment_allowed
+    all_comments = receta.comments.all()
+    comments = [comment for comment in all_comments if is_comment_allowed(comment.body)]
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.post = receta  # Asignar la receta al comentario
-            comment.user = request.user  # Asignar el usuario autenticado
-            comment.save()
-            return redirect('recetas:receta_detalle', receta_id=receta.id)
+            comment.post = receta
+            comment.user = request.user
+
+            # Verificar si el comentario cumple con el filtro antes de guardarlo
+            if is_comment_allowed(comment.body):
+                comment.save()
+                return redirect('recetas:receta_detalle', receta_id=receta.id)
+            else:
+                form.add_error(None, "Tu comentario contiene palabras ofensivas y no ha sido comentado.")
     else:
         form = CommentForm()
 
@@ -156,7 +175,7 @@ def receta_detalle(request, receta_id):
         'comments': comments,
         'form': form,
     })
-    
+
 def busqueda_funcional(request):
     searched = request.GET.get('busquedaFuncional', '')
     category = request.GET.get('categoria', '')
@@ -263,3 +282,11 @@ def post_detail(request, post_id):
         form = CommentForm()
 
     return render(request, 'post_detail.html', {'post': post, 'form': form, 'comments': comments})
+
+
+def is_comment_allowed(comment_body):
+    for word in PROHIBITED_WORDS:
+        if word.lower() in comment_body.lower():  # Ignora mayúsculas/minúsculas
+            return False
+    return True
+
