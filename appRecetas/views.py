@@ -212,6 +212,7 @@ def get_top_posts(limit=3):
     
 #Ayuda
 @check_user_blocked
+@login_required
 def contacto(request):
     if request.method == "POST":
         formulario = ContactoForm(data=request.POST)
@@ -265,6 +266,31 @@ def like(request, post_id):
         post.likes.add(request.user)
     return redirect('recetas:receta_detalle', post.id) 
 
+#Favoritos en un post
+@login_required
+def toggle_favorite(request, post_id):
+    # Obtener el post correspondiente
+    receta = get_object_or_404(Post, id=post_id)
+    
+    # Alternar el favorito
+    if receta.favorites.filter(id=request.user.id).exists():
+        receta.favorites.remove(request.user)
+        messages.success(request, "Se eliminó de tus favoritos.")
+    else:
+        receta.favorites.add(request.user)
+        messages.success(request, "¡Se agregó a tus favoritos!")
+
+    # Redirigir a la vista detalle de la receta
+    return redirect('recetas:receta_detalle', receta_id=post_id)  # Asegúrate de que receta_id sea correcto
+
+
+@login_required
+def favorite_posts(request):
+    favorites = request.user.favorite_posts.all()
+    return render(request, 'pages/usuario/favorites.html', {'favorites': favorites})
+
+
+#Comentarios en un post
 @check_user_blocked
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)

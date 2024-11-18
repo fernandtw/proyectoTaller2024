@@ -1,0 +1,21 @@
+{% extends 'components/Layout/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="favorites-container">
+  <h1 class="favorites-title">Mis Favoritos</h1>
+  {% if favorites %}
+    <ul class="favorites-list">
+      {% for post in favorites %}
+        <li class="favorite-item">
+          <a href="{% url 'recetas:receta_detalle' post.id %}" class="favorite-link">
+            {{ post.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="no-favorites">No tienes publicaciones en tus favoritos.</p>
+  {% endif %}
+</div>
+{% endblock %}

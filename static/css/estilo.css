@@ -6,11 +6,38 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box; 
+    background-color: #F3F3E0;
 
 }
 main {
     flex: 1;
 
+}
+
+/* Nav */
+
+nav{
+    height: 5.5rem;
+}
+.link_principal{
+    font-family: "Source Sans 3", cursive;
+    font-size: 1.5rem;
+    color: honeydew;
+}
+.nav-link{
+    font-family: "Source Sans 3", cursive;
+    font-size: 1rem;
+    color: honeydew;
+}
+.nav-link.active {
+    color: #FBF8EF !important; /* Cambia el color del texto a blanco cuando está activo */
+    background-color: #FF8A8A !important; /* Cambia el fondo a un color rojo cuando está activo */
+}
+
+  /* Estilo para el hover de los enlaces */
+.nav-link:hover {
+    color: white !important;
+    background-color: #EF5A6F !important; /* Un tono más oscuro de rojo al hacer hover */
 }
 
 /* Home titulo */
@@ -103,6 +130,7 @@ main {
     max-width: 800px; /* Adjust as needed */
     margin: 0 auto; /* Center the card horizontally */
 }
+
 
 .recipe-card {
     display: flex;
@@ -232,6 +260,19 @@ main {
 .recipe-card:hover {
     transform: scale(1.03);
 }
+.comment-text p {
+    word-break: break-word;   /* Rompe las palabras largas */
+    white-space: normal;      /* Asegura que el texto se ajuste y no se quede en una sola línea */
+    overflow-wrap: break-word; 
+}
+
+/* CSS */
+.comment-text {
+    min-height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea los elementos al inicio (izquierda) */
+}
 
 .btn-ver-receta {
     background-color: #007bff; /* Cambia esto al color que prefieras */
@@ -283,24 +324,6 @@ img {
 
 }
 
-body{
-    background-color: #FFEFEF;
-}
-.navbar {
-    width: 100%;
-    max-width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-
-.navbar > .container-fluid {
-    padding-left: 15px;
-    padding-right: 15px;
-}
 /* Imagenes */
 .card_image{
     border-radius: 50%;
@@ -393,11 +416,70 @@ body{
 
 #busqueda{
     width: 100%;
-    height: 90vh;
+    height: 130vh;
 }
 
 
+/* Favoritos */
 
+.favorite-form{
+    margin-top: -37px;
+    margin-left: 20px;
+}
+
+.favorites-container {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.favorites-title {
+    font-size: 4rem;
+    font-weight: bold;
+    font-family: "Edu AU VIC WA NT Hand", cursive;
+    margin-bottom: 1.5rem;
+    color: #1a202c;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+    text-align: center;
+}
+
+.favorites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.favorite-item {
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.favorite-item:hover {
+    transform: scale(1.05);
+}
+
+.favorite-link {
+    display: block;
+    padding: 1rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #4f46e5;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.favorite-link:hover {
+    background-color: #f9fafb;
+    color: #3730a3;
+}
+
+.no-favorites {
+    color: #4b5563;
+    font-style: italic;
+}
 
 /* Header */
 .header-bg {

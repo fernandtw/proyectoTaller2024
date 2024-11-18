@@ -39,16 +39,32 @@
 
           <br><br>
           {% if user.is_authenticated %}
-          <form action="{% url 'recetas:like_post' receta.id %}" method="post" class="like-form">  <!-- Asegúrate de usar el ID correcto -->
+          <form action="{% url 'recetas:like_post' receta.id %}" method="post" class="like-form">
             {% csrf_token %}
             <button type="submit" class="btn {% if user in receta.likes.all %}btn-success{% else %}btn-danger{% endif %}">
-                <i class="bi bi-heart me-2"></i>  <!-- Icono de corazón -->
-                <span class="badge">{{ receta.likes.count }}</span>  <!-- Contador de "Me gusta" -->
+              <i class="bi bi-heart me-2"></i> 
+              <span class="badge">{{ receta.likes.count }}</span>
             </button>
           </form>
-          {% else %}
-            <p>Debes estar logueado para dar "Me gusta".</p>
-          {% endif %}
+
+          <!-- Botón de Favoritos -->
+          <form action="{% url 'recetas:toggle_favorite' receta.id %}" method="post" class="favorite-form">
+            {% csrf_token %}
+            <button type="submit" class="btn {% if user in receta.favorites.all %}btn-warning{% else %}btn-outline-warning{% endif %}">
+              <i class="bi bi-star me-2"></i> 
+              {% if user in receta.favorites.all %}
+                Quitar de Favoritos
+              {% else %}
+                Añadir a Favoritos
+              {% endif %}
+            </button>
+          </form>
+        {% else %}
+          <p>Debes estar logueado para dar "Me gusta" o añadir a "Favoritos".</p>
+        {% endif %}
+
+
+
 
           {% if user.is_authenticated %}
           <h2 class="pt-5 text-end me-5 pe-4">Comentarios...</h2>
@@ -75,8 +91,10 @@
                           {% endif %}
                           <strong>{{ comment.user.username }}</strong>
                       </div>
-                      <p class="mt-2">{{ comment.body }}</p>
-                      <small class="text-muted">{{ comment.date_added }}</small>
+                      <div class="comment-text">
+                        <p>{{ comment.body }}</p>
+                        <small class="text-muted">{{ comment.date_added }}</small>
+                      </div>
                   </div>
               {% endfor %}
           {% else %}
@@ -86,8 +104,20 @@
             <p>Debes estar logueado para "Comentar"</p>
           {% endif %}
 
+          {% if messages %}
+            <script>
+              {% for message in messages %}
+                Swal.fire({
+                  title: '¡Favorito!',
+                  text: "{{ message }}",
+                  iconHtml: '<i class="fa fa-star" style="color:gold;"></i>',
+                  confirmButtonText: 'Aceptar'
+                });
+              {% endfor %}
+            </script>
+        {% endif %}
+
         </article>
-     
       </div>
     </div>
   </div>
