@@ -15,35 +15,31 @@ main {
 }
 
 /* Nav */
+.nav {
+    font-family: "Edu AU VIC WA NT Hand", cursive;
 
-nav{
-    height: 5.5rem;
 }
-.link_principal{
-    font-family: "Source Sans 3", cursive;
-    font-size: 1.5rem;
-    color: honeydew;
-}
+/* Color de los enlaces por defecto */
 .nav-link{
-    font-family: "Source Sans 3", cursive;
-    font-size: 1rem;
-    color: honeydew;
+    font-family: "Fira Sans", sans-serif;
 }
 .nav-link.active {
-    color: #FBF8EF !important; /* Cambia el color del texto a blanco cuando está activo */
-    background-color: #FF8A8A !important; /* Cambia el fondo a un color rojo cuando está activo */
+  color: white !important; /* Cambia el color del texto */
+  background-color: #ff5722 !important; /* Fondo destacado (puedes cambiar el color) */
+  border-radius: 5px; /* Bordes redondeados para resaltar */
+  transition: background-color 0.3s ease; /* Animación para suavizar el cambio */
 }
 
-  /* Estilo para el hover de los enlaces */
 .nav-link:hover {
-    color: white !important;
-    background-color: #EF5A6F !important; /* Un tono más oscuro de rojo al hacer hover */
+  background-color: #ff784e !important; /* Cambia el fondo al pasar el cursor */
+  color: #ffffff !important; /* Asegúrate de que el texto sea legible */
 }
+
 
 /* Home titulo */
 
 .hero_title{
-    font-family: "Edu AU VIC WA NT Hand", cursive;
+    font-family: "Dancing Script", cursive;
     font-size: 7rem;
     font-optical-sizing: auto;
     font-weight: weight;
@@ -184,13 +180,11 @@ nav{
 
 .contenedor_recetas {
     display: flex;
-    flex-direction: column; /* Cambiar a columna para una mejor organización */
-    align-items: center; /* Centrar las tarjetas */
-    width: 100%; /* Ancho completo de la ventana */
-    height: auto; /* Altura completa de la ventana */
-    overflow-y: auto; /* Permitir el desplazamiento vertical si es necesario */
-    padding: 5px; /* Espaciado interno */
-    box-sizing: border-box; /* Incluir padding en el ancho y alto total */
+    flex-direction: column; 
+    align-items: center; 
+    height: auto;
+    overflow-y: auto; 
+    box-sizing: border-box; 
     margin: 0px;
 }
 
