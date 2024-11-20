@@ -267,6 +267,7 @@ def like(request, post_id):
     return redirect('recetas:receta_detalle', post.id) 
 
 #Favoritos en un post
+@check_user_blocked
 @login_required
 def toggle_favorite(request, post_id):
     # Obtener el post correspondiente
@@ -285,6 +286,7 @@ def toggle_favorite(request, post_id):
 
 
 @login_required
+@check_user_blocked
 def favorite_posts(request):
     favorites = request.user.favorite_posts.all()
     return render(request, 'pages/usuario/favorites.html', {'favorites': favorites})
