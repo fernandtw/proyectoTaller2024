@@ -9,7 +9,7 @@
   <form method="post">
     {% csrf_token %} 
 
-    <div class="card mx-auto" style="width: 30rem;">
+    <div class="card mx-auto">
       <div class="card-body">
         <h5 class="card-title">Complete todos los campos</h5>
         {{ form | crispy}}
