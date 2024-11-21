@@ -17,11 +17,14 @@ main {
 /* Nav */
 .nav {
     font-family: "Edu AU VIC WA NT Hand", cursive;
+    position: relative;
+    z-index: 5; /* Aparece debajo */
 
 }
 /* Color de los enlaces por defecto */
 .nav-link{
     font-family: "Fira Sans", sans-serif;
+    margin: 1px;
 }
 .nav-link.active {
   color: white !important; /* Cambia el color del texto */
@@ -137,7 +140,7 @@ main {
 .recipe-card img {
     flex: 1; /* La imagen ocupará todo el espacio disponible */
     object-fit: cover; /* La imagen se ajustará al contenedor sin distorsionarse */
-    max-width: 50%; /* La imagen ocupará como máximo el 50% del ancho de su contenedor */
+    max-width: 60%; /* La imagen ocupará como máximo el 50% del ancho de su contenedor */
     height: auto; /* La altura se ajustará automáticamente para mantener la proporción de la imagen */
 }
 
@@ -190,35 +193,42 @@ h3{
     height: auto;
     overflow-y: auto; 
     box-sizing: border-box; 
-    margin: 0px;
+
+}
+
+.container_detalle{
+    margin-top: 4.5rem;
 }
 
 /* Estilo para cada tarjeta */
 .card {
     width: 35rem; 
-    height: 100%;/* Ancho completo del contenedor */
-    max-width: 800px; /* Ancho máximo del contenedor de tarjetas */
-    border: none; /* Sin borde */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    margin: 10px 0; /* Margen entre tarjetas */
-    transition: transform 0.2s; /* Efecto de hover */
+    height: 100%;
+    max-width: 800px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    transition: transform 0.2s;
     margin-top: 50px;
     margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 10;
 }
 
 /* Efecto al pasar el mouse sobre la tarjeta */
 .card:hover {
-    transform: scale(1.02); /* Aumentar ligeramente al pasar el ratón */
+    transform: scale(1.1);
+    z-index: 15;
 }
 
 /* Estilo para la imagen de la receta */
 .card_receta img {
-    width: 100%; /* Ancho completo de la tarjeta */
-    height: 100%; /* Altura automática para mantener la proporción */
-    border-top-left-radius: 10px; /* Bordes redondeados en la parte superior */
-    border-top-right-radius: 10px; /* Bordes redondeados en la parte superior */
-    object-fit: countain;
+    width: 100%; 
+    height: 100%; 
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px; 
+    object-fit: cover;
 }
 
 /* Estilo para el cuerpo de la tarjeta */
@@ -393,9 +403,13 @@ img {
     text-decoration: none;
     margin: 2em;
     padding: 1em;
-    border-radius: 1%;
+    border-radius: 0.5rem;
 }
 
+form div.form-control{
+    overflow-y: hidden;
+    max-height: 40px;
+}
 .card_perfil_contenido {
     background-color: #87A2FF; /* Color inicial */
     transition: background-color 0.3s ease;
@@ -510,6 +524,14 @@ img {
     transform: scale(1.05); /* Efecto de escalado */
 }
 
+
+/* Tablas */
+
+.table_recetas{
+    min-width: 830px;
+
+}
+
 /* Medias */
 @media (min-width: 768px) {
     body {
@@ -599,6 +621,20 @@ img {
         font-size: 0.4rem;
     }
 
+    .recipe-card img {
+        flex: 1; /* La imagen ocupará todo el espacio disponible */
+        object-fit: cover; /* La imagen se ajustará al contenedor sin distorsionarse */
+        max-width: 90%; /* La imagen ocupará como máximo el 50% del ancho de su contenedor */
+        height: auto; /* La altura se ajustará automáticamente para mantener la proporción de la imagen */
+    }
+    
+    .recipe-card h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        font-family: "Edu AU VIC WA NT Hand", cursive;
+    }
+
     
 
 
@@ -622,6 +658,20 @@ img {
     .btn-contacto{
         width: 20%;
         height: 90%;
+    }
+
+    .recipe-card img {
+        flex: 1; /* La imagen ocupará todo el espacio disponible */
+        object-fit: cover; /* La imagen se ajustará al contenedor sin distorsionarse */
+        max-width: 90%; /* La imagen ocupará como máximo el 50% del ancho de su contenedor */
+        height: auto; /* La altura se ajustará automáticamente para mantener la proporción de la imagen */
+    }
+    
+    .recipe-card h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        font-family: "Edu AU VIC WA NT Hand", cursive;
     }
 
     h3{

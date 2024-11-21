@@ -5,7 +5,7 @@
 {% block title %}Detalle Receta{% endblock %}
 {% block content %}
 
-  <div class="container-fluid my-5 align-items-center justify-content-center">
+  <div class="container_detalle container-fluid align-items-center justify-content-center">
     <div class="row">
       <div class="col-lg-8 mx-auto">
         <article class="recipe-card d-flex align-items-center">
@@ -30,7 +30,7 @@
 
           {% if receta.tabla %}
             <h2>Tabla Nutricional</h2>
-            <img src="{{ receta.tabla.url }}" style="width: 20rem;" alt="{{ receta.title }}" class="img-fluid rounded mb-4">
+            <img src="{{ receta.tabla.url }}" alt="{{ receta.title }}" class="img-fluid rounded mb-4">
           {% endif %}
 
         
@@ -38,6 +38,8 @@
           
 
           <br><br>
+
+      {% if not user.is_staff %}
           {% if user.is_authenticated %}
           <form action="{% url 'recetas:like_post' receta.id %}" method="post" class="like-form">
             {% csrf_token %}
@@ -65,7 +67,6 @@
 
 
 
-
           {% if user.is_authenticated %}
           <h2 class="pt-5 text-end me-5 pe-4">Comentarios...</h2>
 
@@ -87,7 +88,7 @@
                           {% if comment.user.perfil.avatar %}
                               <img src="{{ comment.user.perfil.avatar.url }}" alt="{{ comment.user.username }}'s avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
                           {% else %}
-                              <img src="{% static 'path/to/default/avatar.jpg' %}" alt="Default avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                              <img src="{% static 'avatar/icon.png' %}" alt="Default avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
                           {% endif %}
                           <strong>{{ comment.user.username }}</strong>
                       </div>
@@ -116,6 +117,11 @@
               {% endfor %}
             </script>
         {% endif %}
+      {% else %}
+        <!-- Los usuarios staff no verán los botones de "Me gusta", "Favoritos" y "Comentarios" -->
+        <p>Este contenido está oculto para usuarios staff.</p>
+      {% endif %}
+
 
         </article>
       </div>

@@ -1,5 +1,5 @@
 {% extends 'components/Layout/base.html' %} 
-
+{% load static %}
 {% block title %}Perfil{% endblock %}
 {% block content %}  
   <h1 class="text-center mt-5">Perfil de {{ perfil.usuario.username }}</h1>
@@ -11,7 +11,9 @@
           <img src="{{ perfil.avatar.url}}" alt="Avatar" class="img-avatar card-img-top m-auto"  alt="...">
         </div>
       {% else %}
-        <p>No tienes un avatar cargado.</p>
+      <div class="card_image d-flex justify-content-center m-3">
+        <img src="{% static 'avatar/icon.png' %}" alt="Default avatar" class="rounded-circle me-2">
+      </div>
       {% endif %}
       <div class="card-body">
         <p><strong>usuario:</strong> {{ perfil.usuario }}</p>
