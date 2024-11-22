@@ -21,16 +21,16 @@
           </li>
           <!-- Puedes agregar más opciones para el staff aquí -->
         {% endif %}
-        {% if request.user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link {% if request.path == '/perfil/' %}active{% endif %}" href="{% url 'usuarios:perfil' %}">Perfil</a>
-          </li>
         {% if request.user.is_authenticated and not request.user.is_staff %}
         
           <li class="nav-item">
             <a class="nav-link {% if request.path == '/favoritos/' %}active{% endif %}" href="{% url 'recetas:favorite_posts' %}">Mis Favoritos</a>
           </li>
         {% endif %}
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/perfil/' %}active{% endif %}" href="{% url 'usuarios:perfil' %}">Perfil</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'usuarios:exit' %}">Salir</a>
           </li>         
