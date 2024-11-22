@@ -12,9 +12,6 @@
         <li class="nav-item">
           <a class="nav-link {% if request.path == '/recetas/' %}active{% endif %}" href="{% url 'recetas:recetas' %}">Recetas</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.path == '/perfil/' %}active{% endif %}" href="{% url 'usuarios:perfil' %}">Perfil</a>
-        </li>
         {% if request.user.is_staff %}
           <li class="nav-item">
             <a class="nav-link {% if request.path == '/listar-recetas/' %}active{% endif %}" href="{% url 'recetas:listar_recetas' %}">Administrar recetas</a>
@@ -25,7 +22,11 @@
           <!-- Puedes agregar más opciones para el staff aquí -->
         {% endif %}
         {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/perfil/' %}active{% endif %}" href="{% url 'usuarios:perfil' %}">Perfil</a>
+          </li>
         {% if request.user.is_authenticated and not request.user.is_staff %}
+        
           <li class="nav-item">
             <a class="nav-link {% if request.path == '/favoritos/' %}active{% endif %}" href="{% url 'recetas:favorite_posts' %}">Mis Favoritos</a>
           </li>
@@ -52,9 +53,29 @@
         <!-- Selector de categoría -->
         <select class="form-select me-2" name="categoria">
           <option value="">Todas las categorías</option>
-          {% for categoria in categorias %}
-            <option value="{{ categoria.0 }}" {% if categoria.0 == categoria_seleccionada %}selected{% endif %}>{{ categoria.1 }}</option>
-          {% endfor %}
+          
+            <option value="aperitivo">Aperitivo</option>
+          
+            <option value="principal">Plato Principal</option>
+          
+            <option value="postre">Postre</option>
+          
+            <option value="bebida">Bebida</option>
+          
+            <option value="pan">Pan y Bollería</option>
+          
+            <option value="sopa">Sopa y Guiso</option>
+          
+            <option value="ensalada">Ensalada</option>
+          
+            <option value="mariscos">Mariscos</option>
+          
+            <option value="carnes">Carnes</option>
+          
+            <option value="vegetariano">Vegetariano</option>
+          
+            <option value="otros">Otros</option>
+          
         </select>
         
         <!-- Botón de búsqueda -->

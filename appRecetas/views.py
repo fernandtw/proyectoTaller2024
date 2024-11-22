@@ -180,16 +180,19 @@ def busqueda_funcional(request):
     searched = request.GET.get('busquedaFuncional', '')
     category = request.GET.get('categoria', '')
     resultados_list = Post.objects.all()
-
+    print(category)
     if searched:
         resultados_list = resultados_list.filter(title__icontains=searched)
 
     if category:
         resultados_list = resultados_list.filter(category=category)
 
+    print(resultados_list)
     paginator = Paginator(resultados_list, 2)
     page_number = request.GET.get('page')
     resultados = paginator.get_page(page_number)
+    print("*"*30)
+    print(resultados )
 
     context = {
         'searched': searched,

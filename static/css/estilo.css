@@ -140,19 +140,19 @@ main {
 .recipe-card img {
     flex: 1; /* La imagen ocupará todo el espacio disponible */
     object-fit: cover; /* La imagen se ajustará al contenedor sin distorsionarse */
-    max-width: 60%; /* La imagen ocupará como máximo el 50% del ancho de su contenedor */
+    max-width: 50%; /* La imagen ocupará como máximo el 50% del ancho de su contenedor */
     height: auto; /* La altura se ajustará automáticamente para mantener la proporción de la imagen */
 }
 
 .recipe-card h1 {
-    font-size: 4rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 1rem;
     font-family: "Edu AU VIC WA NT Hand", cursive;
 }
 
 .recipe-card h2 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 1rem;
     font-family: "Fira Sans", sans-serif;
@@ -300,6 +300,7 @@ h3{
     text-align: center;
     padding: 20px;
     margin-top: 15rem;
+    width: 100%;
     
 }
 

@@ -1,0 +1,32 @@
+
+
+{% if resultados.has_other_pages %}
+        <!-- Paginador dentro del centro -->
+        <div class="d-flex justify-content-center mb-5 pb-5">
+          <ul class="pagination">
+            {% if resultados.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&categoria={{ categoria_seleccionada }}&page={{ resultados.previous_page_number }}">Anterior</a>
+              </li>
+            {% endif %}
+
+            {% for page in resultados.paginator.page_range %}
+              {% if page == resultados.number %}
+                <li class="page-item active" aria-current="page">
+                  <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&categoria={{ categoria_seleccionada }}&page={{ page }}">{{ page }}</a>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&categoria={{ categoria_seleccionada }}&page={{ page }}">{{ page }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% if resultados.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&categoria={{ categoria_seleccionada }}&page={{ resultados.next_page_number }}">Siguiente</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+{% endif %}

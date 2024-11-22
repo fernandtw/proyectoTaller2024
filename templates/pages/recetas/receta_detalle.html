@@ -15,18 +15,18 @@
           {% endif %}
 
           <h2>Ingredientes</h2>
-          <ol class="mb-4">
+          <ul class="mb-4">
             {% for ingrediente in ingredientes %}
               <li>{{ ingrediente.strip }}</li>
             {% endfor %}
-          </ol>
+          </ul>
 
           <h2>Instrucciones</h2>
-          <ol class="mb-4">
+          <ul class="mb-4">
             {% for instruccion in instrucciones %}
               <li>{{ instruccion.strip }}</li>
             {% endfor %}
-          </ol>
+          </ul>
 
           {% if receta.tabla %}
             <h2>Tabla Nutricional</h2>
@@ -39,7 +39,7 @@
 
           <br><br>
 
-      {% if not user.is_staff %}
+      
           {% if user.is_authenticated %}
           <form action="{% url 'recetas:like_post' receta.id %}" method="post" class="like-form">
             {% csrf_token %}
@@ -50,6 +50,7 @@
           </form>
 
           <!-- Botón de Favoritos -->
+          {% if not user.is_staff %}
           <form action="{% url 'recetas:toggle_favorite' receta.id %}" method="post" class="favorite-form">
             {% csrf_token %}
             <button type="submit" class="btn {% if user in receta.favorites.all %}btn-warning{% else %}btn-outline-warning{% endif %}">
@@ -60,6 +61,7 @@
                 Añadir a Favoritos
               {% endif %}
             </button>
+            {% endif %}
           </form>
         {% else %}
           <p>Debes estar logueado para dar "Me gusta" o añadir a "Favoritos".</p>
@@ -117,10 +119,6 @@
               {% endfor %}
             </script>
         {% endif %}
-      {% else %}
-        <!-- Los usuarios staff no verán los botones de "Me gusta", "Favoritos" y "Comentarios" -->
-        <p>Este contenido está oculto para usuarios staff.</p>
-      {% endif %}
 
 
         </article>
