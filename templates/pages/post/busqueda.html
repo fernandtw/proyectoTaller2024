@@ -1,10 +1,11 @@
 {% extends 'components/Layout/base.html' %}
 {% load static %}
 {% block content %}
+
+
   <center id="busqueda">
-    {% if searched %}
       <h1 class="mb-4">Última búsqueda: {{ searched }}</h1>
-      
+     {% if resultados %}
       <div class="d-flex flex-column align-items-center">
         {% for resultado in resultados %}
           <div class="card mb-4" style="width: 15rem;">
@@ -16,41 +17,11 @@
           </div>
         {% endfor %}
       </div>
-
-      {% if resultados.has_other_pages %}
-        <!-- Paginador dentro del centro -->
-        <div class="d-flex justify-content-center mb-5 pb-5">
-          <ul class="pagination">
-            {% if resultados.has_previous %}
-              <li class="page-item">
-                <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&categoria={{ categoria_seleccionada }}&page={{ resultados.previous_page_number }}">Anterior</a>
-              </li>
-            {% endif %}
-
-            {% for page in resultados.paginator.page_range %}
-              {% if page == resultados.number %}
-                <li class="page-item active" aria-current="page">
-                  <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&categoria={{ categoria_seleccionada }}&page={{ page }}">{{ page }}</a>
-                </li>
-              {% else %}
-                <li class="page-item">
-                  <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&categoria={{ categoria_seleccionada }}&page={{ page }}">{{ page }}</a>
-                </li>
-              {% endif %}
-            {% endfor %}
-
-            {% if resultados.has_next %}
-              <li class="page-item">
-                <a class="page-link" href="?busquedaFuncional={{ searched|urlencode }}&categoria={{ categoria_seleccionada }}&page={{ resultados.next_page_number }}">Siguiente</a>
-              </li>
-            {% endif %}
-          </ul>
-        </div>
-      {% endif %}
-
+      {% include "components/paginator_busqueda.html" %}
     {% else %}
-      <h1>¡Hey! Olvidaste ingresar lo que deseas buscar.</h1>
+      <p>No se han encontrado resultados</p>
     {% endif %}
+
   </center>
 {% endblock %}
 

@@ -3,47 +3,52 @@
 {% block title %}Listar Receta{% endblock %}
 {% block content %}
   <div
-    class="d-flex justify-content-center align-items-start"
-    style="min-height: 80vh">
+    class="mx-3"
+    style="min-height: 80vh; width:90% ;"
+    
+    >
     <div class="card-body">
       <h2 class="text-center m-1">Listado de Recetas</h2>
 
       <a href="{% url 'recetas:agregar_recetas' %}" class="btn btn-outline-success btn-sm">
         Agregar Receta
       </a>
-      <table class="table table-striped table-hover table-responsive-sm my-2">
-        <tr>
-          <th>Título</th>
-          <th>Ingredientes</th>
-          <th>Instrucciones</th>
-          <th>Categoría</th>
-          <th>Opciones</th>
-        </tr>
-        {% for p in entity %}
+      <div class="overflow-x-scroll">
+        <table class="table_recetas table table-striped table-hover table-responsive-sm my-2">
           <tr>
-            <td>{{ p.title | title }}</td>
-            <td>{{ p.ingredients | truncatewords:5 }}</td>
-            <td>{{ p.instructions | truncatewords:5 }}</td>
-            <!-- Muestra solo las primeras 20 palabras -->
-            <td>{{ p.category }}</td>
-            <!-- Asumiendo que category es un ForeignKey y tiene un campo 'name' -->
-            <td>
-              <a
-                href="{% url 'recetas:modificar_receta' p.id %}"
-                class="boton btn btn-info btn-sm px-1">
-                Modificar
-              </a>
-              <a
-                href="{% url 'recetas:eliminar_receta' p.id %}"
-                class="boton btn btn-danger btn-sm px-2">
-                Eliminar
-              </a>
-            </td>
+            <th>Título</th>
+            <th>Ingredientes</th>
+            <th>Instrucciones</th>
+            <th>Categoría</th>
+            <th>Opciones</th>
           </tr>
-        {% endfor %}
-      </table>
+          {% for p in entity %}
+            <tr>
+              <td>{{ p.title | title }}</td>
+              <td>{{ p.ingredients | truncatewords:5 }}</td>
+              <td>{{ p.instructions | truncatewords:5 }}</td>
+              <!-- Muestra solo las primeras 20 palabras -->
+              <td>{{ p.category }}</td>
+              <!-- Asumiendo que category es un ForeignKey y tiene un campo 'name' -->
+              <td>
+                <a
+                  href="{% url 'recetas:modificar_receta' p.id %}"
+                  class="boton btn btn-info btn-sm px-1">
+                  Modificar
+                </a>
+                <a
+                  href="{% url 'recetas:eliminar_receta' p.id %}"
+                  class="boton btn btn-danger btn-sm px-2">
+                  Eliminar
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+
       <div>
-        {% include 'pages/paginator.html' %}
+        {% include 'components/paginator.html' %}
       </div>
   </div>
 </div>

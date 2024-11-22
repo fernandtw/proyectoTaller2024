@@ -5,7 +5,7 @@
 {% block title %}Detalle Receta{% endblock %}
 {% block content %}
 
-  <div class="container-fluid my-5 align-items-center justify-content-center">
+  <div class="container_detalle container-fluid align-items-center justify-content-center">
     <div class="row">
       <div class="col-lg-8 mx-auto">
         <article class="recipe-card d-flex align-items-center">
@@ -15,22 +15,22 @@
           {% endif %}
 
           <h2>Ingredientes</h2>
-          <ol class="mb-4">
+          <ul class="mb-4">
             {% for ingrediente in ingredientes %}
               <li>{{ ingrediente.strip }}</li>
             {% endfor %}
-          </ol>
+          </ul>
 
           <h2>Instrucciones</h2>
-          <ol class="mb-4">
+          <ul class="mb-4">
             {% for instruccion in instrucciones %}
               <li>{{ instruccion.strip }}</li>
             {% endfor %}
-          </ol>
+          </ul>
 
           {% if receta.tabla %}
             <h2>Tabla Nutricional</h2>
-            <img src="{{ receta.tabla.url }}" style="width: 20rem;" alt="{{ receta.title }}" class="img-fluid rounded mb-4">
+            <img src="{{ receta.tabla.url }}" alt="{{ receta.title }}" class="img-fluid rounded mb-4">
           {% endif %}
 
         
@@ -38,6 +38,8 @@
           
 
           <br><br>
+
+      
           {% if user.is_authenticated %}
           <form action="{% url 'recetas:like_post' receta.id %}" method="post" class="like-form">
             {% csrf_token %}
@@ -48,6 +50,7 @@
           </form>
 
           <!-- Botón de Favoritos -->
+          {% if not user.is_staff %}
           <form action="{% url 'recetas:toggle_favorite' receta.id %}" method="post" class="favorite-form">
             {% csrf_token %}
             <button type="submit" class="btn {% if user in receta.favorites.all %}btn-warning{% else %}btn-outline-warning{% endif %}">
@@ -58,11 +61,11 @@
                 Añadir a Favoritos
               {% endif %}
             </button>
+            {% endif %}
           </form>
         {% else %}
           <p>Debes estar logueado para dar "Me gusta" o añadir a "Favoritos".</p>
         {% endif %}
-
 
 
 
@@ -87,7 +90,7 @@
                           {% if comment.user.perfil.avatar %}
                               <img src="{{ comment.user.perfil.avatar.url }}" alt="{{ comment.user.username }}'s avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
                           {% else %}
-                              <img src="{% static 'path/to/default/avatar.jpg' %}" alt="Default avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                              <img src="{% static 'avatar/icon.png' %}" alt="Default avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
                           {% endif %}
                           <strong>{{ comment.user.username }}</strong>
                       </div>
@@ -116,6 +119,7 @@
               {% endfor %}
             </script>
         {% endif %}
+
 
         </article>
       </div>
